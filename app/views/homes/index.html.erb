@@ -1,0 +1,11 @@
+<% if current_user %>
+    <%if current_user.type=="Admin"%>
+     <%controller.redirect_to admins_path%>
+     <%end%>
+    <%if current_user.type=="Buyer"%>
+     <%controller.redirect_to buyers_path%>
+    <%end%>
+  <li><%= link_to "Sign out", destroy_user_session_path, method: :delete  %></li>
+<% else %>
+  <li><%= link_to "Sign in", new_user_session_path %></li>
+<% end %>
