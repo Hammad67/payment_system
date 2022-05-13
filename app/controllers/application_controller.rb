@@ -7,5 +7,14 @@ class ApplicationController < ActionController::Base
    #        devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:name,:type,:email, :password, :avatar)}
    #        devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:name,:type,:avatar, :email, :password, :current_password)}
         
-   #     end
+   #     
+   include Pundit
+   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+  private
+
+  def user_not_authorized
+    flash[:alert] = "You are not authorized to perform this action."
+    redirect_back(fallback_location: root_path)
+  end
  end
