@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @feature.name %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @feature.code %>
+</p>
+<p>
+  <strong>Unit Price:</strong>
+  <%= @feature.unit_price %>
+</p>
+<p>
+  <strong>Max Unit Limit:</strong>
+  <%= @feature.max_unit_limit %>
+</p>
+
+<%= link_to 'Edit', edit_feature_path(@feature) %> |
+<%= link_to 'Back', features_path %>
