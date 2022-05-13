@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+ resources :features
+  resources :plans
   resources :buyers
   resources :admins
   devise_for :users

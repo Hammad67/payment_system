@@ -5,8 +5,32 @@ class UserPolicy < ApplicationPolicy
     #   scope.all
     # end
   end
+
   def index?
-    @user.type=="Admin"
+    @user.type == 'Admin'
   end
 
+  def new?
+    @user.type == 'Admin'
+  end
+
+  def create?
+    @user.type == 'Admin'
+  end
+
+  def edit?
+    @user.type == 'Admin'
+  end
+
+  def update?
+    @user.type == 'Admin'
+  end
+
+  def destroy?
+    @user.type == 'Admin'
+  end
+
+  def show?
+    @user.type == 'Admin'
+  end
 end

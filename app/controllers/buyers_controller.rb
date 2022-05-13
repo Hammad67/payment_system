@@ -1,7 +1,7 @@
 class BuyersController < ApplicationController
 
   def index
-    
+  
   end
 
   def new
