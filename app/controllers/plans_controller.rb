@@ -4,6 +4,7 @@ class PlansController < ApplicationController
   # GET /plans or /plans.json
   def index
     @plans = Plan.all
+    authorize @user
   end
 
   # GET /plans/1 or /plans/1.json
@@ -13,6 +14,7 @@ class PlansController < ApplicationController
   # GET /plans/new
   def new
     @plan = Plan.new
+    authorize @plan
   end
 
   # GET /plans/1/edit
@@ -23,6 +25,7 @@ class PlansController < ApplicationController
   def create
      
     @plan = Plan.new(plan_params)
+    authorize @plan
     @plan.admin_id=current_user.id
 
     respond_to do |format|
