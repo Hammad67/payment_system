@@ -1,7 +1,10 @@
 class BuyersController < ApplicationController
 
   def index
-  
+   @plan=Plan.all
+   authorize @plan
+   
+   
   end
 
   def new

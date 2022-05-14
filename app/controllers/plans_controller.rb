@@ -4,7 +4,7 @@ class PlansController < ApplicationController
   # GET /plans or /plans.json
   def index
     @plans = Plan.all
-    authorize @user
+    authorize @plans
   end
 
   # GET /plans/1 or /plans/1.json
@@ -27,7 +27,6 @@ class PlansController < ApplicationController
     @plan = Plan.new(plan_params)
     authorize @plan
     @plan.admin_id=current_user.id
-
     respond_to do |format|
       if @plan.save
         format.html { redirect_to plan_url(@plan), notice: "Plan was successfully created." }

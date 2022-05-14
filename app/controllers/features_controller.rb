@@ -1,4 +1,5 @@
 class FeaturesController < ApplicationController
+  before_action :set_feature, only: %i[ show edit update destroy ]
   def new
     @feature=Feature.new
   end
@@ -44,11 +45,13 @@ class FeaturesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  def show
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_feature
-      @feature = feature.find(params[:id])
+      @feature = Feature.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

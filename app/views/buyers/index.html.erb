@@ -1,3 +1,19 @@
 <h1>BuyersDashbord</h1>
 <p>Welcome to Our site.....</p><h6><%=current_user.name%></h6>
+<p><%@plan.each do |plan|%>
+
+
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h4 class="card-title">Plan Name:<%=plan.name%></h4>
+    <p class="card-text"><%plan.monthly_fee%></p>
+       <h3>Features</h3>
+    <%plan.features.each do |plan_feature|%>
+ 
+    <%=plan_feature.name%></p>    
+    <%end%>
+    <a href="#" class="btn btn-primary">Subscribe</a>
+  </div>
+</div>
+<%end%>
  <%= button_to "Sign out", destroy_user_session_path, method: :delete,class:"btn btn-danger" %>
