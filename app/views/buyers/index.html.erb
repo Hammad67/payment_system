@@ -12,7 +12,7 @@
  
     <%=plan_feature.name%></p>    
     <%end%>
-    <a href="#" class="btn btn-primary">Subscribe</a>
+    <%=link_to "Subscribe",new_subscription_path(:plan_id => plan.id),class:"btn btn-primary",method: :get%>
   </div>
 </div>
 <%end%>

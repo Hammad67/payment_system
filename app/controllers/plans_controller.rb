@@ -23,7 +23,7 @@ class PlansController < ApplicationController
 
   # POST /plans or /plans.json
   def create
-     
+   
     @plan = Plan.new(plan_params)
     authorize @plan
     @plan.admin_id=current_user.id

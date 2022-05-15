@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_14_091044) do
+ActiveRecord::Schema.define(version: 2022_05_15_050024) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -53,6 +53,16 @@ ActiveRecord::Schema.define(version: 2022_05_14_091044) do
     t.string "stripe_plan_id"
   end
 
+  create_table "subscriptions", force: :cascade do |t|
+    t.string "stripe_subscription_id"
+    t.integer "plan_id", null: false
+    t.integer "buyer_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["buyer_id"], name: "index_subscriptions_on_buyer_id"
+    t.index ["plan_id"], name: "index_subscriptions_on_plan_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -64,9 +74,11 @@ ActiveRecord::Schema.define(version: 2022_05_14_091044) do
     t.string "name"
     t.integer "type"
     t.string "stripe_cust_id"
+    t.string "stripe_source_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "subscriptions", "users", column: "buyer_id"
 end

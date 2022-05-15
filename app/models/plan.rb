@@ -3,16 +3,20 @@ class Plan < ApplicationRecord
     validates :monthly_fee, presence: true
     belongs_to :admin 
     has_many :features
+    has_many :subscriptions
+    has_many :buyers, through: :subscriptions
     after_create:stripe_plan
     def stripe_plan
-      plan=Stripe::Plan.create({
-            amount: "#{self.monthly_fee}",
+        
+       plan=Stripe::Price.create({
+            unit_amount: 2000,
             currency: 'usd',
-            interval: 'month',
-            product: {name:"#{self.name}"},
+            recurring: {interval: 'month'},
+            product_data: {name:"#{self.name}"},
           })
-          binding.pry
+    
           self.update(stripe_plan_id:plan.id)
+         
     end
 
 end
