@@ -21,14 +21,13 @@ class SubscriptionsController < ApplicationController
   end
   def create_subscribtion(plan_id)
     plan = Plan.find_by(id: plan_id)
-    binding.pry
+
     subscribtion = Stripe::Subscription.create({
       customer: "#{current_user.stripe_cust_id}",
       items: [
         {price: "#{plan.stripe_plan_id}"},
       ],
     })
-    binding.pry
     Subscription.create(buyer_id: current_user.id, plan_id: plan.id, stripe_subscription_id: subscribtion.id)
   end
 end
