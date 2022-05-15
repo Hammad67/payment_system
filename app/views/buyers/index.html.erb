@@ -10,9 +10,13 @@
        <h3>Features</h3>
     <%plan.features.each do |plan_feature|%>
  
-    <%=plan_feature.name%></p>    
+    <p><%=link_to "#{plan_feature.name}",feature_path(plan_feature.id),class:"btn btn-danger"%></p> 
     <%end%>
+     <%if current_user.subscriptions.find_by(plan_id:"#{plan.id}").present?%>
+       <button type="button" class="btn btn-success">Subscribed</button>
+     <%else%>
     <%=link_to "Subscribe",new_subscription_path(:plan_id => plan.id),class:"btn btn-primary",method: :get%>
+    <%end%>
   </div>
 </div>
 <%end%>
