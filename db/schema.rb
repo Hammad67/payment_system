@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_16_045150) do
+ActiveRecord::Schema.define(version: 2022_05_16_122803) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -42,6 +42,18 @@ ActiveRecord::Schema.define(version: 2022_05_16_045150) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "admin_id"
     t.integer "plan_id"
+  end
+
+  create_table "featureusages", force: :cascade do |t|
+    t.integer "total_extra_units"
+    t.boolean "is_used"
+    t.integer "feature_id", null: false
+    t.integer "buyer_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "no_of_exeeded_units"
+    t.index ["buyer_id"], name: "index_featureusages_on_buyer_id"
+    t.index ["feature_id"], name: "index_featureusages_on_feature_id"
   end
 
   create_table "plans", force: :cascade do |t|
@@ -82,5 +94,7 @@ ActiveRecord::Schema.define(version: 2022_05_16_045150) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "featureusages", "features"
+  add_foreign_key "featureusages", "users", column: "buyer_id"
   add_foreign_key "subscriptions", "users", column: "buyer_id"
 end

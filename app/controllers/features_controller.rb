@@ -46,6 +46,7 @@ class FeaturesController < ApplicationController
     end
   end
   def show
+  
   end
 
   private

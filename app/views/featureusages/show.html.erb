@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Total extra units:</strong>
+  <%= @featureusage.total_extra_units %>
+</p>
+
+<p>
+  <strong>Is used:</strong>
+  <%= @featureusage.is_used %>
+</p>
+
+<p>
+  <strong>Feature:</strong>
+  <%= @featureusage.feature_id %>
+</p>
+
+<p>
+  <strong>Buyer:</strong>
+  <%= @featureusage.buyer_id %>
+</p>
+
+<%= link_to 'Edit', edit_feature_featureusage_path(@featureusage) %> |
+<%= link_to 'Back', feature_featureusages_path %>

@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
- resources :features
+ 
+ resources :features do
+ resources :featureusages
+ end
   resources :plans
   resources :buyers
   resources :admins
