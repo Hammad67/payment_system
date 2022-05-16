@@ -3,10 +3,18 @@ class SubscriptionsController < ApplicationController
   end
 
   def create
+     retreive_stripe_customer=Stripe::Customer.retrieve("#{current_user.stripe_cust_id}")
+      plan=Plan.find_by(params[:plan_id])
+      if retreive_stripe_customer.balance< plan.monthly_fee
+        flash[:alert]="Your account balance is insufficent for this request" 
+        redirect_to buyers_path 
+end
     create_customer_source(params[:stripeToken]) unless current_user.stripe_source_id.present?
     create_subscribtion(params[:plan_id]) if params[:plan_id].present?
   end
+
   private
+
   def create_customer_source(token)
     customer=current_user.stripe_cust_id
 
@@ -22,12 +30,14 @@ class SubscriptionsController < ApplicationController
   def create_subscribtion(plan_id)
     plan = Plan.find_by(id: plan_id)
 
-    subscribtion = Stripe::Subscription.create({
+    subscription = Stripe::Subscription.create({
       customer: "#{current_user.stripe_cust_id}",
       items: [
         {price: "#{plan.stripe_plan_id}"},
       ],
     })
-    Subscription.create(buyer_id: current_user.id, plan_id: plan.id, stripe_subscription_id: subscribtion.id)
+
+    Subscription.create!(buyer_id: current_user.id, plan_id: plan.id, stripe_subscription_id: subscription.id,start_date:Time.at(subscription.current_period_start) ,end_date:Time.at(subscription.current_period_end))
+
   end
 end
