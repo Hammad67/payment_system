@@ -12,6 +12,7 @@
     <%end%>
      <%if current_user.subscriptions.find_by(plan_id:"#{plan.id}").present?%>
        <button type="button" class="btn btn-success">Subscribed</button>
+     
       
      <%else%>
     <%=link_to "Subscribe",new_subscription_path(:plan_id => plan.id),class:"btn btn-primary",method: :get%>

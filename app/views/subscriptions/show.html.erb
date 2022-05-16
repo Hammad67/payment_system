@@ -1,0 +1,12 @@
+<h1><%=@plan_name%></h1>
+ <h1><%=@monthly_fee%></h1>
+ <%if@feature.present?%>
+ <%@features.each do |feature|%>
+ <h1><%=feature.name%></h1>
+  <h1><%=feature.code%></h1>
+   <h1><%=feature.name%></h1>
+   <h1><%=feature.unit_price%></h1>
+   <h1><%=feature.max_unit_limit%></h1>
+   <%end%>
+     <%end%>
+     <%=button_to "Unsubscribe",subscription_path(@subscription),class:"btn btn-warning",method: :patch%>
