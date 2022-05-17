@@ -12,6 +12,30 @@ class SubscriptionsController < ApplicationController
     create_customer_source(params[:stripeToken]) unless current_user.stripe_source_id.present?
     create_subscribtion(params[:plan_id]) if params[:plan_id].present?
   end
+  def edit
+    binding.pry
+    @subscription=Subscription.find(params[:id])
+   end
+    def update
+      @subscription=Subscription.find(params[:id])
+      subscription_update=Stripe::Subscription.update(
+        "#{@subscription.stripe_subscription_id}",
+        {
+          cancel_at_period_end: true,
+        }
+      )
+      @subscription.update(is_active:false,end_date:Time.at(subscription_update.canceled_at))
+      redirect_to buyers_path notice: "Your Subscription is unsubscribed Successfully" 
+
+    end
+    def show
+    
+      @subscription=Subscription.find(params[:id])
+      @plan_name=@subscription.plan.name
+      @monthly_fee=@subscription.plan.monthly_fee
+      @features= @subscription.plan.features
+   
+    end
 
   private
 
@@ -39,17 +63,6 @@ class SubscriptionsController < ApplicationController
 
     @subscription=Subscription.create!(buyer_id: current_user.id, plan_id: plan.id, stripe_subscription_id: subscription.id,start_date:Time.at(subscription.current_period_start) ,end_date:Time.at(subscription.current_period_end),is_active:true)
     redirect_to @subscription
-    def update
-      @subscription=Subscription.find(params[:id])
-      @subscription.update(is_active:false)
-      redirect_to buyers_path notice: "Your Subscription is unsubscribed Successfully" 
-    end
-    def show
-      binding.pry
-      @subscription=Subscription.find(params[:id])
-      @plan_name=@subscription.plan.name
-      @monthly_fee=@subscription.plan.monthly_fee
-      @features= @subscription.plan.features
-    end
+  
   end
 end

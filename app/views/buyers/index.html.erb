@@ -10,7 +10,8 @@
  
     <p><%=link_to "#{plan_feature.name}",feature_path(plan_feature.id,:plan_id => plan.id),class:"btn btn-danger"%></p> 
     <%end%>
-     <%if current_user.subscriptions.find_by(plan_id:"#{plan.id}").present?%>
+     <%if current_user.subscriptions.where(is_active:true).find_by(plan_id:"#{plan.id}").present?%>
+    <%binding.pry%>
        <button type="button" class="btn btn-success">Subscribed</button>
      
       
