@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_16_170948) do
+ActiveRecord::Schema.define(version: 2022_05_17_091358) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 2022_05_16_170948) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "no_of_exeeded_units"
+    t.integer "plan_id"
     t.index ["buyer_id"], name: "index_featureusages_on_buyer_id"
     t.index ["feature_id"], name: "index_featureusages_on_feature_id"
   end
@@ -78,6 +79,18 @@ ActiveRecord::Schema.define(version: 2022_05_16_170948) do
     t.index ["plan_id"], name: "index_subscriptions_on_plan_id"
   end
 
+  create_table "transactions", force: :cascade do |t|
+    t.datetime "billing_day"
+    t.integer "buyer_id"
+    t.integer "subscription_id"
+    t.boolean "is_successfull", default: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "plan_id"
+    t.index ["buyer_id"], name: "index_transactions_on_buyer_id"
+    t.index ["subscription_id"], name: "index_transactions_on_subscription_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -98,4 +111,5 @@ ActiveRecord::Schema.define(version: 2022_05_16_170948) do
   add_foreign_key "featureusages", "features"
   add_foreign_key "featureusages", "users", column: "buyer_id"
   add_foreign_key "subscriptions", "users", column: "buyer_id"
+  add_foreign_key "transactions", "users", column: "buyer_id"
 end

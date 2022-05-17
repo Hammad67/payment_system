@@ -1,6 +1,7 @@
 class AdminsController < ApplicationController
   def index
-    
+    @subscription =Subscription.all
+    @transaction=Transaction.all
   end
 
   def new

@@ -5,6 +5,7 @@ class Plan < ApplicationRecord
     has_many :features
     has_many :subscriptions
     has_many :buyers, through: :subscriptions
+    has_many :transactions
     after_create:stripe_plan
     def stripe_plan
         

@@ -17,7 +17,9 @@
   <strong>Max Unit Limit:</strong>
   <%= @feature.max_unit_limit %>
 </p>
+<%if current_user.type=="Buyer"%>
 <%if current_user.subscriptions.find_by(plan_id:"#{params[:plan_id]}").present?%>
- <%=button_to "Click if your are using extra units of feature",new_feature_featureusage_path(@feature,@feature_usage),class:"btn btn-success",method: :get%>
+ <%=link_to "Click if your are using extra units of feature",new_feature_featureusage_path(@feature,@feature_usage,:plan_id => params[:plan_id]),class:"btn btn-success",method: :get%>
+ <%end%>
  <%end%>
 <%= link_to 'Back', buyers_path,class:"btn btn-danger"%>

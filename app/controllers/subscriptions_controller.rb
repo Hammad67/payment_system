@@ -13,11 +13,11 @@ class SubscriptionsController < ApplicationController
     create_subscribtion(params[:plan_id]) if params[:plan_id].present?
   end
   def edit
-    binding.pry
     @subscription=Subscription.find(params[:id])
    end
     def update
       @subscription=Subscription.find(params[:id])
+      @transaction=Transaction.find_by(subscription_id:"#{@subscription.id}")
       subscription_update=Stripe::Subscription.update(
         "#{@subscription.stripe_subscription_id}",
         {
@@ -25,6 +25,7 @@ class SubscriptionsController < ApplicationController
         }
       )
       @subscription.update(is_active:false,end_date:Time.at(subscription_update.canceled_at))
+      @transaction.update(billing_day:@subscription.end_date)
       redirect_to buyers_path notice: "Your Subscription is unsubscribed Successfully" 
 
     end
@@ -62,6 +63,7 @@ class SubscriptionsController < ApplicationController
     })
 
     @subscription=Subscription.create!(buyer_id: current_user.id, plan_id: plan.id, stripe_subscription_id: subscription.id,start_date:Time.at(subscription.current_period_start) ,end_date:Time.at(subscription.current_period_end),is_active:true)
+    @transaction=Transaction.create!(billing_day:@subscription.end_date,plan_id:@subscription.plan_id,buyer_id:@subscription.buyer_id,subscription_id:@subscription.id)
     redirect_to @subscription
   
   end
