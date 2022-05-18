@@ -21,13 +21,15 @@ class FeatureusagesController < ApplicationController
 
   def create
     @feature = Feature.find(params[:feature_id])
-    @feature = Feature.find(params[:feature_id])
     @featureusage=Featureusage.find_by(plan_id:"#{params[:featureusage][:plan_id]}",feature_id:"#{params[:feature_id]}",buyer_id:"#{current_user.id}")
+    max_unit_limit = Feature.find_by(id: params[:feature_id].to_s).max_unit_limit
+
     if @featureusage.present?
     if (params[:featureusage][:total_extra_units]).to_i < @featureusage.total_extra_units 
+      
       render :edit, status: :unprocessable_entity
     else
-     Featureusage.update(total_extra_units:"#{params[:featureusage][:total_extra_units]}")
+     Featureusage.update(total_extra_units:"#{params[:featureusage][:total_extra_units]}",no_of_exeeded_units:"#{(params[:featureusage][:total_extra_units]).to_i - max_unit_limit}")
         redirect_to feature_featureusages_path 
       end
       
