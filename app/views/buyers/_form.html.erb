@@ -1,7 +1,7 @@
 <h1>Buyers#new</h1>
-<%= form_with model: @buyer ,url:buyers_path, local:true do |f| %>
-<% if @buyer.errors.any? %>
-  <% @buyer.errors.full_messages.each do |message|%>\
+<%= form_with model: buyer , local:true do |f| %>
+<% if buyer.errors.any? %>
+  <% buyer.errors.full_messages.each do |message|%>\
   <h6><%= message %> </h6>
   <%end%>
 <%end%>
@@ -25,7 +25,7 @@
   </div>
 <div class="form-group">
  <%= f.label :avatar %>
-<% if @buyer.avatar.nil?%><br />Current: <%= current_user.avatar.filename.to_s %>
+<% if buyer.avatar.nil?%><br />Current: <%= current_user.avatar.filename.to_s %>
 <%else%>
 
 <div class="col-sm-8"><%= f.file_field :avatar, class: "form-control" %></div>

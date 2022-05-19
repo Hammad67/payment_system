@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(version: 2022_05_18_125525) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "name"
-    t.integer "type"
+    t.integer "type", default: 0
     t.string "stripe_cust_id"
     t.string "stripe_source_id"
     t.index ["email"], name: "index_users_on_email", unique: true

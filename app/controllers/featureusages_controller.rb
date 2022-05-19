@@ -19,24 +19,26 @@ class FeatureusagesController < ApplicationController
     @feature = Feature.find(params[:feature_id])
   end
 
-  def create # rubocop:todo Metrics/AbcSize, Metrics/MethodLength
+  def create
     @feature = Feature.find(params[:feature_id])
-    # rubocop:todo Layout/LineLength
+
     @featureusage = Featureusage.find_by(plan_id: (params[:featureusage][:plan_id]).to_s, feature_id: params[:feature_id].to_s,
-                                         # rubocop:enable Layout/LineLength
+
                                          buyer_id: current_user.id.to_s)
     max_unit_limit = Feature.find_by(id: params[:feature_id].to_s).max_unit_limit
 
     if @featureusage.present?
+      binding.pry
       if (params[:featureusage][:total_extra_units]).to_i < @featureusage.total_extra_units
+
 
         render :edit, status: :unprocessable_entity
       else
-        Featureusage.update(total_extra_units: (params[:featureusage][:total_extra_units]).to_s,
+       @featureusage= Featureusage.update(total_extra_units: (params[:featureusage][:total_extra_units]).to_s,
                             # rubocop:todo Layout/LineLength
                             no_of_exeeded_units: ((params[:featureusage][:total_extra_units]).to_i - max_unit_limit).to_s)
         # rubocop:enable Layout/LineLength
-        redirect_to feature_featureusages_path
+        redirect_to feature_featureusage_path(@featureusage,params[:feature_id])
       end
 
     else
@@ -50,7 +52,7 @@ class FeatureusagesController < ApplicationController
           'You are now using the extra units create'
       end
       if @featureusage.save
-        redirect_to feature_featureusages_path(@featureusage)
+        redirect_to feature_featureusage_path(@featureusage)
       else
         render :new, status: :unprocessable_entity
       end

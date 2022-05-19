@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PlanPolicy < ApplicationPolicy
+class BuyerPolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
     # def resolve
@@ -9,7 +9,7 @@ class PlanPolicy < ApplicationPolicy
   end
 
   def index?
-    @user.type == 'Admin' or  @user.type == 'Buyer'
+    @user.type == 'Admin'
   end
 
   def new?

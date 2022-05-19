@@ -1,13 +1,18 @@
-<h1><%=@plan_name%></h1>
- <h1><%=@monthly_fee%></h1>
- <%if@feature.present?%>
+<p id="notice"><%= notice %></p>
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">Plan-Name :<%= @plan_name %></h5>
+    <h6 class="card-subtitle mb-2 text-muted">Plan-Monthly-Fee :<%= @monthly_fee %>$</h6>
+     <%if@feature.present?%>
  <%@features.each do |feature|%>
- <h1><%=feature.name%></h1>
-  <h1><%=feature.code%></h1>
-   <h1><%=feature.name%></h1>
-   <h1><%=feature.unit_price%></h1>
-   <h1><%=feature.max_unit_limit%></h1>
-   <%end%>
+    <p class="card-text"><%=feature.name%></p>
+     <p class="card-text"><%=feature.code%></p>
+      <p class="card-text"><%=feature.unit_price%></p>
+       <p class="card-text"><%=feature.max_unit_limit%></p>
+        <%end%>
      <%end%>
- 
+       </div>
+</div>
+
+    <a href="<%=root_path%>" class="card-link btn btn-danger">Back to Dashbord</a>
      <%=button_to "Unsubscribe",subscription_path,class:"btn btn-warning",method: :patch%>

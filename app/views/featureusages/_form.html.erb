@@ -1,5 +1,5 @@
 <h1>Enter unit which you use extra</h1>
-<%= form_for([@feature, @featureusage]) do |form| %>
+<%= simple_form_for([@feature, @featureusage]) do |form| %>
   <% if @featureusage.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@featureusage.errors.count, "error") %> prohibited this featureusage from being saved:</h2>
@@ -13,8 +13,7 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :total_extra_units %>
-    <%= form.number_field :total_extra_units %>
+    <%= form.input :total_extra_units %>
   </div>
 <div class="field">
      <%= form.hidden_field :plan_id,value: params[:plan_id] %>

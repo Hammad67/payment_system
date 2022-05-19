@@ -1,2 +1,10 @@
-<h1>Buyers#show</h1>
-<p>Find me in app/views/buyers/show.html.erb</p>
+<% if @buyer.avatar.attached? %>
+            <%= image_tag @buyer.avatar.variant(resize: "200x200")  %>
+          <% else %>
+            <img class="avatar-index rounded-circle mx-auto" src="<%= "/images/default_user.png " %>" alt="Userimage">
+          <% end %>
+<p><%=@buyer.name%></p>
+<p><%=@buyer.email%></p>
+    <%= button_to "Edit", edit_buyer_path(@buyer),class:"btn btn-success",method: :get %>
+     <%= button_to "Delete", buyer_path(@buyer),class:"btn btn-warning",method: :delete %>
+       <%= button_to "Back to Dashbord", root_path,class:"btn btn-danger",method: :get %>

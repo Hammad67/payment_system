@@ -37,5 +37,4 @@ class WebhooksController < ApplicationController
 
     render json: { message: 'success' }
   end
-  # rubocop:enable Metrics/MethodLength
 end

@@ -5,8 +5,8 @@ class PlansController < ApplicationController
 
   # GET /plans or /plans.json
   def index
-        @plans = Plan.all
-                           authorize @plans
+    @plans = Plan.all
+    authorize @plans
   end
 
   # GET /plans/1 or /plans/1.json
@@ -15,7 +15,7 @@ class PlansController < ApplicationController
   # GET /plans/new
   def new
     @plan = Plan.new
-          authorize @plan
+    authorize @plan
   end
 
   # GET /plans/1/edit
@@ -37,11 +37,10 @@ class PlansController < ApplicationController
     end
   end
 
-  # PATCH/PUT /plans/1 or /plans/1.json
   def update
     respond_to do |format|
       if @plan.update(plan_params)
-        @plan.admin_id = current_user
+        @plan.admin_id = current_user.id
         format.html { redirect_to plan_url(@plan), notice: 'Plan was successfully updated.' }
         format.json { render :show, status: :ok, location: @plan }
       else
@@ -51,7 +50,6 @@ class PlansController < ApplicationController
     end
   end
 
-  # DELETE /plans/1 or /plans/1.json
   def destroy
     @plan.destroy
 

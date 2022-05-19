@@ -3,8 +3,9 @@
 class Featureusage < ApplicationRecord
   belongs_to :feature
   belongs_to :buyer
-  # validate :total_extra_unit
-  before_update :checkvalue
+  validates :total_extra_units, presence: true
+
+  # before_update :checkvalue
 
   # def total_extra_unit
   #   max_unit = Feature.find_by(id: feature_id).max_unit_limit

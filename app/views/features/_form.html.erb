@@ -1,10 +1,10 @@
-<%= form_with(model: feature, local: true) do |form| %>
-  <% if feature.errors.any? %>
+<%= simple_form_for @feature  do |form| %>
+  <% if @feature.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(feature.errors.count, "error") %> prohibited this plan from being saved:</h2>
+      <h2><%= pluralize(@feature.errors.count, "error") %> prohibited this plan from being saved:</h2>
 
       <ul>
-        <% feature.errors.full_messages.each do |message| %>
+        <% @feature.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
@@ -12,21 +12,17 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+    <%= form.input :name %>
   </div>
 
   <div class="field">
-    <%= form.label :code %>
-    <%= form.number_field :code %>
+    <%= form.input :code %>
   </div>
  <div class="field">
-    <%= form.label :unit_price %>
-    <%= form.number_field :unit_price %>
+    <%= form.input :unit_price %>
   </div>
  <div class="field">
-    <%= form.label :max_unit_limit %>
-    <%= form.number_field :max_unit_limit %>
+    <%= form.input :max_unit_limit %>
   </div>
   <div class="field">
     <%= form.select :plan_id, Plan.all.collect { |p| [ p.name, p.id ] }, {prompt: "Select plan from below"}, class: "form-control" %>

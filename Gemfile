@@ -25,6 +25,7 @@ gem "figaro"
 gem 'stripe_event'
  gem 'ngrok-tunnel'
  gem 'rubocop-rails', require: false
+ gem 'simple_form'
 #  gem 'pg'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
@@ -45,7 +46,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
-
+gem 'mini_magick', '~> 4.11'
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
