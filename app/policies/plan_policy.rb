@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PlanPolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
@@ -5,6 +7,7 @@ class PlanPolicy < ApplicationPolicy
     #   scope.all
     # end
   end
+
   def index?
     @user.type == 'Buyer'
   end

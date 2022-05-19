@@ -1,21 +1,17 @@
-class BuyersController < ApplicationController
+# frozen_string_literal: true
 
+class BuyersController < ApplicationController
   def index
-   @plan=Plan.all
-   authorize @plan
-   
-   
+    @plan = Plan.all
+    authorize @plan
   end
 
   def new
-   
     @user = User.new
     authorize @user
   end
 
   def create
-   
-     
     @user = User.new(user_params)
 
     if @user.save
@@ -23,7 +19,7 @@ class BuyersController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
-end
+  end
 
   def edit; end
 

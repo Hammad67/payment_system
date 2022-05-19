@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Featureusage < ApplicationRecord
   belongs_to :feature
   belongs_to :buyer
@@ -15,13 +17,15 @@ class Featureusage < ApplicationRecord
   #     errors.add(:base, 'Please enter The value which is above maximum value')
   #   end
   # end
-def checkvalue
-  max_unit = Feature.find_by(id: feature_id).max_unit_limit
-  self.no_of_exeeded_units=self.total_extra_units-max_unit
-end
+  def checkvalue
+    max_unit = Feature.find_by(id: feature_id).max_unit_limit
+    self.no_of_exeeded_units = total_extra_units - max_unit
+  end
   # def total_extra_units
   #   if feature_id.present?
+  # rubocop:todo Layout/LineLength
   #     # max_unit = Featureusage.find_by(feature_id:feature_id,plan_id:self.plan_id,buyer_id:self.buyer_id).total_extra_units
+  # rubocop:enable Layout/LineLength
   #     # errors.add(:base, 'Please enter The value which is above maximum value') if total_extra_units < max_unit
   #   end
   # end

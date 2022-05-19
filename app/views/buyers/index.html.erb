@@ -12,11 +12,15 @@
     <%end%>
      <%if current_user.subscriptions.where(is_active:true).find_by(plan_id:"#{plan.id}").present?%>
        <button type="button" class="btn btn-success">Subscribed</button>
-     
-      
+     <%else%>
+
+      <%if current_user.stripe_source_id.present?%>
+      <%=button_to "Subscribe",subscriptions_path(:plan_id => plan.id),class:"btn btn-primary",method: :post%>
+    
      <%else%>
     <%=link_to "Subscribe",new_subscription_path(:plan_id => plan.id),class:"btn btn-primary",method: :get%>
     <%end%>
+     <%end%>
   </div>
 </div>
 <%end%>

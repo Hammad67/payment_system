@@ -22,6 +22,9 @@ gem "pry"
 gem "pundit"
 gem 'stripe'
 gem "figaro"
+gem 'stripe_event'
+ gem 'ngrok-tunnel'
+ gem 'rubocop-rails', require: false
 #  gem 'pg'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
@@ -35,6 +38,10 @@ gem "figaro"
 gem 'bootsnap', '>= 1.4.2', require: false
 
 group :development, :test do
+  gem 'rubocop'
+  gem 'rubocop-performance'
+  gem 'rubocop-rails'
+  gem 'rubocop-minitest' # or gem 'rubocop-rspec' depending on your test suite
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end

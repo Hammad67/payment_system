@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Admin < User
-    has_many :plans
+  has_many :plans 
 end
