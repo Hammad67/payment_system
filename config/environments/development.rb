@@ -21,7 +21,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   # Do not eager load code on boot.
   config.eager_load = false
-  config.hosts << 'f767-103-255-7-25.in.ngrok.io'
+  config.hosts << "1e4c-111-119-177-12.in.ngrok.io"
   # Show full error reports.
   config.consider_all_requests_local = true
 
