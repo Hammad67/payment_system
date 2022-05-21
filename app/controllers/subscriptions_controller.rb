@@ -5,12 +5,6 @@ class SubscriptionsController < ApplicationController
   def new; end
 
   def create
-    #      retreive_stripe_customer=Stripe::Customer.retrieve("#{current_user.stripe_cust_id}")
-    #       plan=Plan.find_by(params[:plan_id])
-    #       if retreive_stripe_customer.balance< plan.monthly_fee
-    #         flash[:alert]="Your account balance is insufficent for this request"
-    #         redirect_to buyers_path
-    # end
     if current_user.stripe_source_id.present?
       create_subscribtion(params[:plan_id]) if params[:plan_id].present?
     else

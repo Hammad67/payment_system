@@ -5,20 +5,7 @@ class WebhooksController < ApplicationController
   payload = request.body.read
   sig_header = request.env['HTTP_STRIPE_SIGNATURE']
   event = JSON.parse(payload)
-  # begin
-  # event = Stripe::Webhook.construct_event(
-  # payload, sig_header, Rails.application.credentials.dig(:stripe, :webhook)
-  # )
-  # rescue JSON::ParserError => e
-  # status 400
-  # return
-  # rescue Stripe::SignatureVerificationError => e
-  # # Invalid signatucharge.failedre
-  # Rails.logger.debug 'Signature error'
-  # Rails.logger.debug e
-  # return
-  # end
-  # Handle the event
+
   case event["type"]
   when 'invoice.payment_failed'
   customer_id=event["data"]["object"]["id"]
@@ -79,7 +66,6 @@ class WebhooksController < ApplicationController
   end
   end
   def charge_customer(final_amount,stripe_customer_source,customer_id)
-  binding.pry
   extra_charge=Stripe::Charge.create({
   amount: "#{final_amount}",
   currency: 'usd',

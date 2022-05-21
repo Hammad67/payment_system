@@ -48,37 +48,7 @@ class FeatureusagesController < ApplicationController
         render :new, status: :unprocessable_entity
       end
    end
-    # max_unit_limit = Feature.find_by(id: params[:feature_id].to_s).max_unit_limit
-
-    # if @featureusage.present?
-    #   if (params[:featureusage][:total_extra_units]).to_i < @featureusage.total_extra_units
-
-
-    #     render :edit, status: :unprocessable_entity
-    #   else
-    #    @featureusage= Featureusage.update(total_extra_units: (params[:featureusage][:total_extra_units]).to_s,
-    #                         # rubocop:todo Layout/LineLength
-    #                         no_of_exeeded_units: ((params[:featureusage][:total_extra_units]).to_i - max_unit_limit).to_s)
-    #     # rubocop:enable Layout/LineLength
-    #     redirect_to feature_featureusage_path(@featureusage,params[:feature_id])
-    #   end
-
-    # else
-    #   @featureusage = @feature.featureusages.new(featureusage_params)
-    #   @featureusage.buyer_id = current_user.id
-    #   @featureusage.plan_id = params[:featureusage][:plan_id]
-    #   max_unit_limit = Feature.find_by(id: params[:feature_id].to_s).max_unit_limit
-    #   @featureusage.no_of_exeeded_units = (params[:featureusage][:total_extra_units]).to_i - max_unit_limit
-    #   if (params[:featureusage][:total_extra_units]).to_i > max_unit_limit
-    #     flash[:alert] =
-    #       'You are now using the extra units create'
-    #   end
-    #   if @featureusage.save
-    #     redirect_to feature_featureusage_path(@featureusage)
-    #   else
-    #     render :new, status: :unprocessable_entity
-    #   end
-    # end
+ 
   end
 
   def update
