@@ -24,10 +24,7 @@ class Buyer < User
   end
 
   def stripe_customer
-    stripe_cust = Stripe::Customer.create({
-                                            email: email.to_s
-                                          })
-    update(stripe_cust_id: stripe_cust.id)
+    StripeCustomer.new.new_stripe_customer(@buyer)
   end
 
 

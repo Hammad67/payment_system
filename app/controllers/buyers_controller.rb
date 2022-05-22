@@ -13,6 +13,7 @@ class BuyersController < ApplicationController
     @buyer = Buyer.new(user_params)
 
     if @buyer.save
+      
       redirect_to @buyer
     else
       render :new, status: :unprocessable_entity
