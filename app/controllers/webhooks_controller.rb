@@ -84,12 +84,14 @@ class WebhooksController < ApplicationController
   feature.featureusages.each do |feature_usage|
   total_extra_units=feature_usage.total_extra_units
   feature_no_of_exeeded_units=feature_usage.no_of_exeeded_units
+  if feature_usage.no_of_exeeded_units.present?
   total_price_of_feature_after_overuse=feature_usage.no_of_exeeded_units*feature_unit_price
 
   # overuse_feature={name: "#{feature_name}",total_price_of_feature_after_overuse: "#{total_price_of_feature_after_overuse}"}
   # feature_extra_array.push(overuse_feature)
 
   feature_extra_array.push(total_price_of_feature_after_overuse)
+  end
   end
   end
   end

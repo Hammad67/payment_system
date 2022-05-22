@@ -26,7 +26,6 @@ class SubscriptionsController < ApplicationController
       }
     )
     @subscription.update(is_active: false, end_date: Time.zone.at(subscription_update.canceled_at))
-    @transaction.update(billing_day: @subscription.end_date)
     redirect_to buyers_path notice: 'Your Subscription is unsubscribed Successfully'
   end
 
@@ -67,7 +66,10 @@ class SubscriptionsController < ApplicationController
     @subscription = Subscription.create!(buyer_id: current_user.id, plan_id: plan.id,
                                          # rubocop:todo Layout/LineLength
                                          stripe_subscription_id: subscription.id, start_date: Time.zone.at(subscription.current_period_start), end_date: Time.zone.at(subscription.current_period_end), is_active: true)
-                                         
+                                         amount=@subscription.plan.monthly_fee
+                                         @transaction = Transaction.create!(billing_day: @subscription.end_date, plan_id: @subscription.plan_id,
+                                          buyer_id: @subscription.buyer_id, subscription_id: @subscription.id,amount:"#{amount}")
+
     # rubocop:enable Layout/LineLength
     redirect_to @subscription
   end

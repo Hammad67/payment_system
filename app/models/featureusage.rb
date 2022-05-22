@@ -15,6 +15,10 @@ class Featureusage < ApplicationRecord
   end
     def exeeded_units
       max_unit = Feature.find_by(id: feature_id).max_unit_limit
+      if total_extra_units > max_unit
       self.no_of_exeeded_units = (total_extra_units - max_unit).abs
+      else
+        self.no_of_exeeded_units=0
+      end
     end
   end
