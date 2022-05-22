@@ -1,4 +1,7 @@
 <%= simple_form_for @plan do |form| %>
+ <div class="card card p-3 bg-gray">
+      <h4 style="color: black">Add Plan</h4>
+      <div style= "class:card-body bd-light;">
   <% if @plan.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@plan.errors.count, "error") %> prohibited this plan from being saved:</h2>
@@ -12,14 +15,19 @@
   <% end %>
 
   <div class="field">
-    <%= form.input :name %>
+    <%= form.input :name ,placeholder: "Enter Name", autofocus: true%>
   </div>
 
   <div class="field">
-    <%= form.input :monthly_fee %>
+    <%= form.input :monthly_fee,placeholder: "Monthly fee in dollors", autofocus: true %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="actions"id="button-id">
+    <%= form.submit "Create Plan",class:"btn btn-success"%>
+      <%= button_to 'Back', root_path,class:"btn btn-danger",method: :get %>
   </div>
+
 <% end %>
+ </div>
+ </div>
+

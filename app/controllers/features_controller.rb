@@ -2,6 +2,9 @@
 
 class FeaturesController < ApplicationController
   before_action :set_feature, only: %i[show edit update destroy] # rubocop:todo Rails/LexicallyScopedActionFilter
+  def index
+    @feature = Feature.all
+  end
   def new
     @feature = Feature.new
   end

@@ -1,10 +1,25 @@
-<% if @buyer.avatar.attached? %>
-            <%= image_tag @buyer.avatar.variant(resize: "200x200")  %>
-          <% else %>
+<div class="d-flex justify-content-center">
+  <div class="card " style="width: 38rem;">
+     <% if @buyer.avatar.attached? %>
+       <%= image_tag @buyer.avatar.variant(resize: "200x200"),class: "card-img-top" %>
+       <% else %>
             <img class="avatar-index rounded-circle mx-auto" src="<%= "/images/default_user.png " %>" alt="Userimage">
           <% end %>
-<p><%=@buyer.name%></p>
-<p><%=@buyer.email%></p>
-    <%= button_to "Edit", edit_buyer_path(@buyer),class:"btn btn-success",method: :get %>
-     <%= button_to "Delete", buyer_path(@buyer),class:"btn btn-warning",method: :delete %>
-       <%= button_to "Back to Dashbord", root_path,class:"btn btn-danger",method: :get %>
+    <div class="card-body card text-dark bg-white ">
+     <hr>
+      <h3 class="card-title"><%= @buyer.name %>,s Record</h3>
+      <hr>
+        <ul class="list-group list-group-flush d-grid gap-3">
+        <li class="list-group-item fw-bold">FirstName:<%= @buyer.name %></li>
+        <li class="list-group-item fw-bold">Email:<%= @buyer.email %></li>
+        </ul>
+    </div>
+    <div class="d-flex margin-top:20px">
+       <div class="col-2"></div>
+       <div class="col-2"><%= button_to "Edit", edit_buyer_path(@buyer),class:"btn btn-success",method: :get %></div>
+       <div class="col-2"> <%= button_to "Delete", buyer_path(@buyer),class:"btn btn-warning",method: :delete %></div>
+       <div class="col-2"><%= button_to "Back to Dashbord", root_path,class:"btn btn-danger",method: :get %></div>
+         <div class="col-3"></div>
+       </div>
+  </div>
+</div>

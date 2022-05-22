@@ -5,7 +5,7 @@ class Buyer < User
   has_many :transactions
   validates :name, presence: true
   after_create :send_email_invite, :stripe_customer
-  after_update :send_email_invite, :update_stripe_customer
+
   has_one_attached :avatar
   validate :avatar_format
 
@@ -30,11 +30,6 @@ class Buyer < User
     update(stripe_cust_id: stripe_cust.id)
   end
 
-  def update_stripe_customer
-    stripe_cust = Stripe::Customer.update(
-      stripe_cust_id.to_s,
-      email: email.to_s
-    )
-  end
+
 
 end

@@ -67,6 +67,7 @@ class SubscriptionsController < ApplicationController
     @subscription = Subscription.create!(buyer_id: current_user.id, plan_id: plan.id,
                                          # rubocop:todo Layout/LineLength
                                          stripe_subscription_id: subscription.id, start_date: Time.zone.at(subscription.current_period_start), end_date: Time.zone.at(subscription.current_period_end), is_active: true)
+                                         
     # rubocop:enable Layout/LineLength
     redirect_to @subscription
   end

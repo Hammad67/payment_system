@@ -1,4 +1,7 @@
 <%= simple_form_for @feature  do |form| %>
+ <div class="card card p-3 bg-gray">
+      <h4 style="color: black">Add Feature</h4>
+      <div style= "class:card-body bd-light;">
   <% if @feature.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@feature.errors.count, "error") %> prohibited this plan from being saved:</h2>
@@ -29,6 +32,9 @@
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+   <%= form.submit "Create Feature", id:"button-id",class: "btn btn-success" %>
+  <%= link_to 'Back', root_path,class:"btn btn-danger",id:"button-id2" %>
   </div>
 <% end %>
+ </div>
+ </div>
