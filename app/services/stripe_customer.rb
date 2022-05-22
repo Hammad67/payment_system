@@ -1,9 +1,10 @@
 class StripeCustomer
-  
+
  def new_stripe_customer(buyer)
   stripe_cust = Stripe::Customer.create({
     email: buyer.email
   })
+  buyer.update(stripe_cust_id:stripe_cust.id)
  end
 
  def charge_customer(final_amount, stripe_customer_source, customer_id)

@@ -24,7 +24,7 @@ class Buyer < User
   end
 
   def stripe_customer
-    StripeCustomer.new.new_stripe_customer(@buyer)
+    StripeCustomer.new.new_stripe_customer(self)
   end
 
 
