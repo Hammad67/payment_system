@@ -6,7 +6,7 @@ ruby '2.7.5'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.1'
 # Use sqlite3 as the database for Active Record
- gem 'sqlite3', '~> 1.4'
+#  gem 'sqlite3', '~> 1.4'
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
 # Use SCSS for stylesheets
@@ -26,7 +26,7 @@ gem 'stripe_event'
  gem 'ngrok-tunnel'
  gem 'rubocop-rails', require: false
  gem 'simple_form'
-#  gem 'pg'
+ gem 'pg'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
