@@ -7,7 +7,7 @@ Rails.application.routes.draw do
                       resources :admins
   resources :subscriptions
   devise_for :users
-  post 'webhooks', to: 'webhooks#subscription_create'
+ resources :webhooks
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
