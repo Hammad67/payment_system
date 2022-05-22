@@ -10,7 +10,7 @@ class Buyer < User
   validate :avatar_format
 
   def avatar_format
-    return unless avatar.present?
+    return unless avatar.attached?
 
     if avatar.blob.content_type.start_with? 'image/'
 
