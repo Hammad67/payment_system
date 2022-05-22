@@ -280,7 +280,7 @@ DEPENDENCIES
   rubocop-minitest
   rubocop-performance
   rubocop-rails
-  sass-rails (>= 6)
+  sass-rails
   selenium-webdriver
   simple_form
   spring
