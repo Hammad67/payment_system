@@ -58,7 +58,7 @@ class WebhooksController < ApplicationController
     stripe_customer_source = buyer_id.stripe_source_id
     plan_id = Plan.find_by(stripe_plan_id: plan_id.to_s)
     @subscription = find_subscribtion(subscription_id, buyer_id, plan_id)
-
+    puts "#{event}" * 50
      if !cancel_at_period_end.present?
         check_cancel_period(amount)
         final_amount = check_overuse_calculations(subscription: @subscription)
@@ -68,10 +68,9 @@ class WebhooksController < ApplicationController
         @subscription.update(end_date: Time.zone.at(current_period_end), is_active: false)
         create_transaction(amount)
         final_amount = check_overuse_calculations(subscription: @subscription)
-        if final_amount.present?
-          extra_charge = stripe_charge(final_amount, stripe_customer_source, customer_id)
-          invoice_of_transaction(extra_charge, buyer)
-        end
+        extra_charge = stripe_charge(final_amount, stripe_customer_source, customer_id) if final_amount.present?
+        puts "#{extra_charge}" * 100
+        invoice_of_transaction(extra_charge, buyer) if final_amount.present?
       end
   end
 
@@ -88,6 +87,7 @@ class WebhooksController < ApplicationController
   def invoice_of_transaction(extra_charge, buyer)
           amount_after_charge = extra_charge['amount']/100
           receipt = extra_charge['receipt_url']
+          puts "#{receipt}" * 200
           create_transaction(amount_after_charge)
           send_invoice(buyer, receipt)
 
