@@ -99,6 +99,8 @@ class WebhooksController < ApplicationController
   end
 
   def send_invoice(buyer, receipt)
+    puts "#{receipt}....................."
+    puts "#{buyer}.........**************"
     InvoiceMailer.with(usermail: buyer.email, invoice: receipt).invoicemail.deliver_now
   end
   def find_subscribtion(subscription_id, buyer_id, plan_id)
