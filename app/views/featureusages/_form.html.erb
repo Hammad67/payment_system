@@ -1,4 +1,4 @@
-<% if @featureusage.no_of_exeeded_units > 0 %>
+<% if @featureusage.no_of_exeeded_units.present?&&@featureusage.no_of_exeeded_units > 0 %>
   <h1>You are now using Extra Features your exeeding units are below</h1>
   <h1><%=@featureusage.no_of_exeeded_units%></h1>
 <%end%>

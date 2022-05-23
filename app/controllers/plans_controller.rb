@@ -45,7 +45,6 @@ class PlansController < ApplicationController
 
   def destroy
     @plan.destroy
-
     respond_to do |format|
       format.html { redirect_to plans_url, notice: 'Plan was successfully destroyed.' }
       format.json { head :no_content }
@@ -56,6 +55,7 @@ class PlansController < ApplicationController
 
   def set_plan
     @plan = Plan.find(params[:id])
+    authorize @plan
   end
 
   def plan_params

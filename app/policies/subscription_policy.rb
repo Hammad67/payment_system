@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FeaturePolicy < ApplicationPolicy
+class SubscriptionPolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
     # def resolve
@@ -13,23 +13,23 @@ class FeaturePolicy < ApplicationPolicy
   end
 
   def new?
-    @user.type == 'Admin'
+    @user.type == 'Buyer'
   end
 
   def create?
-    @user.type == 'Admin'
+    @user.type == 'Buyer'
   end
 
   def edit?
-    @user.type == 'Admin'
+    @user.type == 'Buyer'
   end
 
   def update?
-    @user.type == 'Admin'
+    @user.type == 'Buyer'
   end
 
   def destroy?
-    @user.type == 'Admin'
+    @user.type == 'Buyer'
   end
 
   def show?

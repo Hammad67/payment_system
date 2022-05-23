@@ -4,10 +4,12 @@ class FeaturesController < ApplicationController
   before_action :set_feature, only: %i[show edit update destroy]
   def index
     @feature = Feature.all
+    authorize @feature
   end
 
   def new
     @feature = Feature.new
+    authorize @feature
   end
 
   def create
@@ -55,6 +57,7 @@ class FeaturesController < ApplicationController
 
   def set_feature
     @feature = Feature.find(params[:id])
+    authorize @feature
   end
 
   def feature_params

@@ -9,6 +9,7 @@ class FeatureusagesController < ApplicationController
   def show; end
 
   def new
+    binding.pry
     @featureusage = @feature.featureusages.build unless @featureusage.present?
   end
 
