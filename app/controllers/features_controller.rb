@@ -12,7 +12,6 @@ class FeaturesController < ApplicationController
 
   def create
     @feature = Feature.new(feature_params)
-    authorize @feature
     @feature.admin_id = current_user.id
     @feature.plan_id = params[:feature][:plan_id]
     respond_to do |format|
