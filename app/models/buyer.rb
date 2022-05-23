@@ -1,8 +1,8 @@
 class Buyer < User
-  has_many :subscriptions
+  has_many :subscriptions,dependent: :delete_all
   has_many :plans, through: :subscriptions
-  has_many :featureusages
-  has_many :transactions
+  has_many :featureusages,dependent: :delete_all
+  has_many :transactions,dependent: :delete_all
   validates :name, presence: true
   after_create :send_email_invite, :stripe_customer
 
