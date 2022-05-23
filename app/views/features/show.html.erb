@@ -28,8 +28,8 @@
           <%else%>
               <%=link_to "new",new_feature_featureusage_path(@feature, :plan_id => params[:plan_id]),class:"btn btn-success",method: :get%>
           <%end%>
-         <%= link_to 'Back', root_path,class:"btn btn-danger"%>
          <%end%>
+          <%= link_to 'Back', root_path,class:"btn btn-danger"%>
          <%else%>
          <a href="<%=edit_feature_path(@feature)%>" class="card-link btn btn-warning">Edit</a>
          <a href="<%=features_path%>" class="card-link btn btn-danger">Back</a>
