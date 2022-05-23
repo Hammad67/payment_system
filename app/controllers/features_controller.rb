@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class FeaturesController < ApplicationController
   before_action :set_feature, only: %i[show edit update destroy]
   def index
@@ -17,7 +15,6 @@ class FeaturesController < ApplicationController
     authorize @feature
     @feature.admin_id = current_user.id
     @feature.plan_id = params[:feature][:plan_id]
-
     respond_to do |format|
       if @feature.save
         format.html { redirect_to feature_url(@feature), notice: 'feature was successfully created.' }
@@ -28,6 +25,10 @@ class FeaturesController < ApplicationController
       end
     end
   end
+
+     def edit
+
+     end
 
   def update
     respond_to do |format|

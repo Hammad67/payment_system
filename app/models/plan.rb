@@ -4,10 +4,10 @@ class Plan < ApplicationRecord
   validates :name, presence: true
   validates :monthly_fee, presence: true
   belongs_to :admin
-  has_many :features # rubocop:todo Rails/HasManyOrHasOneDependent
-  has_many :subscriptions # rubocop:todo Rails/HasManyOrHasOneDependent
+  has_many :features,dependent: :delete_all
+  has_many :subscriptions,dependent: :delete_all
   has_many :buyers, through: :subscriptions
-  has_many :transactions # rubocop:todo Rails/HasManyOrHasOneDependent
+  has_many :transactions ,dependent: :delete_all
   after_create :stripe_plan
   def stripe_plan
     plan = Stripe::Price.create({
