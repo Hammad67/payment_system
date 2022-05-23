@@ -14,10 +14,10 @@
     <p><%=link_to "#{plan_feature.name}",feature_path(plan_feature.id,:plan_id => plan.id),class:"link-primary"%></p>
     <%end%>
 
-     <%if current_user.subscriptions.where(is_active:true).find_by(plan_id:"#{plan.id}").present? && current_user.type=="Buyer"%>
+     <%if check_subscription_existence(plan.id).present?%>
       <div class="row">
       <div class="col-4"><button type="button" class="btn btn-success">Subscribed</button></div>
-        <%subscription=current_user.subscriptions.where(is_active:true).find_by(plan_id:"#{plan.id}")%>
+        <%subscription=find_subscription(plan.id)%>
       <div class="col-2"> </div>
       <div class="col-4">  <%=button_to "Unsubscribe",subscription_path(subscription.id),method: :get,class:"btn btn-warning"%></div>
      </div>

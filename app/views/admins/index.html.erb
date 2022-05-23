@@ -1,29 +1,96 @@
 <h1>Admins#index</h1>
 <h1>All Cuurent Subscriptions</h1>
 <p><%@subscription.all.each do |subscription|%>
+<div class="card card p-3 bg-light card-body"><h1>Subscription Details</h1></div>
+  <div class="mt-4 p-5 bg-light text-dark rounded shadow p-3 mb-5 bg-body rounded">
+    <ul class="list-group list-group-flush d-grid gap-3">
+      <li class="list-group-item fw-bold">
+      <%if subscription.plan.present?%>
+        <div class="row">
+          <div class="col-3"><h6>Buyer Name</h6></div>
+          <div class="col-3"><h6><%=subscription.buyer.name%></h6></div>
+        </div>
+      </li>
+        <li class="list-group-item fw-bold">
+        <div class="row">
+          <div class="col-3"><h6>Plan Name</h6></div>
+          <div class="col-3"><h6><%=subscription.plan.name%></h6></div>
+        </div>
+      </li>
+       <li class="list-group-item fw-bold">
+        <div class="row">
+          <div class="col-3"><h6>Plan Monthly fee</h6></div>
+          <div class="col-3"><h6><%=subscription.plan.monthly_fee%></h6></div>
+        </div>
+      </li>
+        <%subscription.plan.features.each do |feature|%>
+      <li class="list-group-item fw-bold">
+        <div class="row">
+          <div class="col-3"><h6>FeatureName:</h6></div>
+          <div class="col-3"><h6><%=feature.name%></h6></div>
+        </div>
+      </li>
+      <li class="list-group-item fw-bold">
+        <div class="row">
+          <div class="col-3"><h6>FeatureCode:</h6></div>
+          <div class="col-3"><h6><%=feature.code %></h6></div>
+        </div>
+      </li>
 
-<%if subscription.plan.present?%>
-<h1>Buyer Name : <%=subscription.buyer.name%>
-<h6>Plan Name :<%=subscription.plan.name%></h6>
-<p>Plan_monthly fee: <%=subscription.plan.monthly_fee%></p>
-<h6>Associated Feature with Plan <%=subscription.plan.name%></h6>
-   <%subscription.plan.features.each do |feature|%>
-   <p>FeatureName:<%=feature.name%></p>
-   <p>FeatureCode<%=feature.code%></p>
-   <p>FeatureUnitPrice<%=feature.unit_price%></p>
-   <p>Feature max_unit_limit<%=feature.max_unit_limit%></p>
-    <%if Featureusage.find_by(feature_id:feature,plan_id:subscription.plan.id,buyer_id:subscription.buyer.id).present?%>
-    <% feature_extract=Featureusage.find_by(feature_id:feature,plan_id:subscription.plan.id,buyer_id:subscription.buyer.id)%>
-   <p>Total Extra Units</p><%= feature_extract.total_extra_units%>
-   <p>No of no_of_exeeded_units<%=feature_extract.no_of_exeeded_units%></p>
-   <%end%>
-   <%end%>
-   <%if subscription.is_active?%>
-      <h5>Start date of Subscription: <%=subscription.start_date%></h1>
-<h5>End date of Subscription: <%=subscription.end_date%></h1>
+       <li class="list-group-item fw-bold">
+        <div class="row">
+          <div class="col-3"><h6>FeatureMaxUnitLimit:</h6></div>
+          <div class="col-3"><h6><%= feature.max_unit_limit%></h6></div>
+        </div>
+      </li>
+      <%if Featureusage.find_by(feature_id:feature,plan_id:subscription.plan.id,buyer_id:subscription.buyer.id).present?%>
+      <% feature_extract=Featureusage.find_by(feature_id:feature,plan_id:subscription.plan.id,buyer_id:subscription.buyer.id)%>
+          <li class="list-group-item fw-bold">
+        <div class="row">
+          <div class="col-3"><h6>Feature Extra Units:</h6></div>
+          <div class="col-3"><h6><%= feature_extract.total_extra_units%></h6></div>
+        </div>
+      </li>
+       <li class="list-group-item fw-bold">
+        <div class="row">
+          <div class="col-3"><h6>Exeeding Units:</h6></div>
+          <div class="col-3"><h6><%= feature_extract.no_of_exeeded_units%></h6></div>
+        </div>
+      </li>
+
+      <%end%>
+      <%end%>
+        <%if subscription.present?%>
+
+      <li class="list-group-item fw-bold">
+        <div class="row">
+          <div class="col-3"><h6>Start date of Subscription: :</h6></div>
+          <div class="col-3"><h6> <%=subscription.start_date%></h6></div>
+        </div>
+        </li>
+         <li class="list-group-item fw-bold">
+        <div class="row">
+          <div class="col-3"><h6>End date of Subscription: :</h6></div>
+          <div class="col-3"><h6> <%=subscription.end_date%></h6></div>
+        </div>
+        </li>
+         <li class="list-group-item fw-bold">
+        <div class="row">
+          <div class="col-3"><h6>Current Status :</h6></div>
+            <%if subscription.is_active?%>
+            <div class="col-3"><button type="button" class="btn btn-success">Active</button></div>
+            <%else%>
+              <div class="col-3"><button type="button" class="btn btn-success">Not Active</button></div>
+            <%end%>
+        </div>
+        </li>
+         </ul>
+      </div>
+      </div>
 <%end%>
 <%end%>
 <%end%>
+
 
 <%=link_to "Add new User(Buyer)",new_buyer_path%>
 <%=link_to "Add new Plan",new_plan_path%>
