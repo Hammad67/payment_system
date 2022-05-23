@@ -21,7 +21,7 @@
       </li>
       <li class="list-group-item fw-bold">
         <%if current_user.type=="Buyer"%>
-         <%if current_user.subscriptions.find_by(plan_id:"#{params[:plan_id]}").present?%>
+         <%if current_user.subscriptions.where(is_active:true).find_by(plan_id:"#{params[:plan_id]}").present?%>
            <% @feature_usage = Featureusage.find_by(plan_id: params[:plan_id], feature_id: @feature.id, buyer_id: current_user.id) %>
           <%if @feature_usage.present? %>
               <%=link_to "edit",edit_feature_featureusage_path(@feature, @feature_usage, :plan_id => params[:plan_id]),class:"btn btn-success",method: :get%>

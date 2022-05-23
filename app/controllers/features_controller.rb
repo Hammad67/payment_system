@@ -40,7 +40,6 @@ class FeaturesController < ApplicationController
     end
   end
 
-  # DELETE /features/1 or /features/1.json
   def destroy
     @feature.destroy
 
