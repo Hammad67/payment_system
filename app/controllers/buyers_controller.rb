@@ -11,8 +11,8 @@ class BuyersController < ApplicationController
 
   def create
     @buyer = Buyer.new(user_params)
-
     if @buyer.save
+
       redirect_to @buyer
     else
       render :new, status: :unprocessable_entity
@@ -23,23 +23,26 @@ class BuyersController < ApplicationController
 
   def update
     if @buyer.update(user_params)
+      authorize @buyer
+      stripe_cust_id = @buyer.stripe_cust_id
+      StripeCustomer.new.update_stripe_customer(stripe_cust_id, @buyer)
+      InviteMailer.with(usermail: @buyer, password: @buyer.password).welcome_mail.deliver_now
       redirect_to @buyer
     else
       render :edit, status: :unprocessable_entity
     end
   end
-  def show
-  end
+
+  def show; end
 
   def destroy
-    Stripe::Customer.delete("#{@buyer.stripe_cust_id}")
+    StripeCustomer.new.destroy_stripe_customer(@buyer)
     @buyer.destroy
-
-     redirect_to root_path, notice: 'User was successfully destroyed.'
-
+    redirect_to root_path, notice: 'User was successfully destroyed.'
   end
 
   private
+
   def set_buyer
     @buyer = Buyer.find(params[:id])
   end

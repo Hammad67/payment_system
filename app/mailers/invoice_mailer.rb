@@ -1,7 +1,7 @@
 class InvoiceMailer < ApplicationMailer
   def invoicemail
     @usermail = params[:usermail]
-    @invoice_pdf = params[:invoice_pdf]
+    @invoice_pdf = params[:invoice]
 
     mail(to: @usermail, subject: 'Here is your invoice!')
   end

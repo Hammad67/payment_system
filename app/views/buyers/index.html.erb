@@ -1,23 +1,26 @@
    <%if current_user.type=="Buyer"%>
 <h1>BuyersDashbord</h1>
-<p>Welcome to Our site.....</p><h6><%=current_user.name%></h6>
-<p><%@plan.each do |plan|%>
-<div class="card" style="width: 18rem;">
+<p>Welcome to Our site.You are signed in as...</p><h6><%=current_user.name%></h6>
+
+<%@plan.each do |plan|%>
+<div class="d-flex col-6">
+<div class="card text-white bg-secondary mb-4" style="width: 23rem;margin:10px;">
   <div class="card-body">
     <h4 class="card-title">Plan Name:<%=plan.name%></h4>
-    <p class="card-text">Plan Monthly Fee<%=plan.monthly_fee%></p>
+    <p class="card-text">Plan Monthly Fee:<%=plan.monthly_fee%>$</p>
        <h3>Features</h3>
     <%plan.features.each do |plan_feature|%>
 
-    <p><%=link_to "#{plan_feature.name}",feature_path(plan_feature.id,:plan_id => plan.id),class:"btn btn-danger"%></p>
+    <strong><%=link_to "#{plan_feature.name}",feature_path(plan_feature.id,:plan_id => plan.id),class:"link-warning"%></strong>
     <%end%>
 
-     <%if current_user.subscriptions.where(is_active:true).find_by(plan_id:"#{plan.id}").present? && current_user.type=="Buyer"%>
-       <button type="button" class="btn btn-success">Subscribed</button>
-        <%current_user.subscriptions.each do |subscription|%>
-        <%=link_to "Unsubscribe",subscription, method: :get ,class:"btn btn-success"%>
-        <%end%>
-
+     <%if check_subscription_existence(plan.id).present?%>
+      <div class="row">
+      <div class="col-4 margin-top:10px;"><button type="button" class="btn btn-success">Subscribed</button></div>
+        <%subscription=find_subscription(plan.id)%>
+      <div class="col-2"> </div>
+      <div class="col-4 margin-top:10px;">  <%=button_to "Unsubscribe",subscription_path(subscription.id),method: :get,class:"btn btn-warning"%></div>
+     </div>
      <%else%>
 
       <%if current_user.stripe_source_id.present?%>
@@ -29,7 +32,8 @@
      <%end%>
   </div>
 </div>
+</div>
 <%end%>
 
- <%= button_to "Sign out", destroy_user_session_path, method: :delete,class:"btn btn-danger" %>
 <%end%>
+
