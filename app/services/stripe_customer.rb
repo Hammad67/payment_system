@@ -42,13 +42,22 @@ class StripeCustomer
       { source: token.to_s }
     )
   end
+
   def update_subscription(subscription)
     subscription_update = Stripe::Subscription.update(
-       subscription.stripe_subscription_id.to_s,
+      subscription.stripe_subscription_id.to_s,
       {
         cancel_at_period_end: true
       }
     )
   end
 
+  def createstripeplan(monthly_fee, name)
+    plan = Stripe::Price.create({
+                                  unit_amount: (monthly_fee * 100).to_s,
+                                  currency: 'usd',
+                                  recurring: { interval: 'month' },
+                                  product_data: { name: name.to_s }
+                                })
+  end
 end

@@ -1,7 +1,7 @@
 class WebhooksController < ApplicationController
   skip_before_action :authenticate_user!
   skip_before_action :verify_authenticity_token
-  def create # rubocop:todo Metrics/AbcSize
+  def create
     payload = request.body.read
     sig_header = request.env['HTTP_STRIPE_SIGNATURE']
     event = JSON.parse(payload)

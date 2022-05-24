@@ -43,8 +43,8 @@
           <div class="col-3"><h6><%= feature.max_unit_limit%></h6></div>
         </div>
       </li>
-      <%if Featureusage.find_by(feature_id:feature,plan_id:subscription.plan.id,buyer_id:subscription.buyer.id).present?%>
-      <% feature_extract=Featureusage.find_by(feature_id:feature,plan_id:subscription.plan.id,buyer_id:subscription.buyer.id)%>
+      <%feature_extract=checkfeatureusage(feature,subscription,buyer_id:subscription.buyer.id)%>
+      <%if feature_extract.present?%>
           <li class="list-group-item fw-bold">
         <div class="row">
           <div class="col-3"><h6>Feature Extra Units:</h6></div>
@@ -85,6 +85,7 @@
         </div>
         </li>
          </ul>
+      </div>
       </div>
       </div>
 <%end%>

@@ -9,7 +9,6 @@ class FeatureusagesController < ApplicationController
   def show; end
 
   def new
-    binding.pry
     @featureusage = @feature.featureusages.build unless @featureusage.present?
   end
 
@@ -19,7 +18,6 @@ class FeatureusagesController < ApplicationController
     @featureusage = @feature.featureusages.new(featureusage_params)
     @featureusage.buyer_id = current_user.id
     @featureusage.plan_id = params[:featureusage][:plan_id]
-    max_unit_limit = Feature.find_by(id: params[:feature_id].to_s).max_unit_limit
     respond_to do |format|
       if @featureusage.save
         format.html do
@@ -37,9 +35,7 @@ class FeatureusagesController < ApplicationController
 
   def update
     respond_to do |format|
-      max_unit_limit = Feature.find_by(id: params[:feature_id].to_s).max_unit_limit
       if @featureusage.update(total_extra_units: (params[:featureusage][:total_extra_units]).to_s)
-        flash[:noice] = 'You are now using the extra units create'
         format.html do
           redirect_to feature_featureusage_url(@feature, @featureusage),
                       notice: 'Feature usage was successfully updated.'

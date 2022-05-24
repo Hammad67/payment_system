@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Featureusage < ApplicationRecord
   belongs_to :feature
   belongs_to :buyer
@@ -13,12 +11,13 @@ class Featureusage < ApplicationRecord
       errors.add(:base, 'Please enter The value which is above maximum value') if total_extra_units < e
     end
   end
-    def exeeded_units
-      max_unit = Feature.find_by(id: feature_id).max_unit_limit
-      if total_extra_units > max_unit
-      self.no_of_exeeded_units = (total_extra_units - max_unit).abs
-      else
-        self.no_of_exeeded_units=0
-      end
-    end
+
+  def exeeded_units
+    max_unit = Feature.find_by(id: feature_id).max_unit_limit
+    self.no_of_exeeded_units = if total_extra_units > max_unit
+                                 (total_extra_units - max_unit).abs
+                               else
+                                 0
+                               end
   end
+end
