@@ -1,5 +1,5 @@
 class StripeService
-  def new_stripe_customer(buyer)
+ def new_stripe_customer(buyer)
     stripe_cust = Stripe::Customer.create({
                                             email: buyer.email
                                           })

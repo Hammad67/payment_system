@@ -3,12 +3,14 @@ class Buyer < User
   has_many :plans, through: :subscriptions
   has_many :featureusages, dependent: :destroy
   has_many :transactions, dependent: :destroy
+  has_one_attached :avatar
+  
   validates :name, presence: true, uniqueness: true
   validates :name, length: { minimum: 10, maximum: 30 }
-  after_create :send_email_invite, :stripe_customer
-
-  has_one_attached :avatar
   validate :avatar_format
+  
+  after_create :send_email_invite, :stripe_customer
+  
 
   def avatar_format
     return unless avatar.attached?
