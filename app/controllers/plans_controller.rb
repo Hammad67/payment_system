@@ -1,28 +1,21 @@
-# frozen_string_literal: true
-
 class PlansController < ApplicationController
   before_action :set_plan, only: %i[show edit update destroy]
 
-  # GET /plans or /plans.json
   def index
     @plans = Plan.all
     authorize @plans
   end
 
-  # GET /plans/1 or /plans/1.json
   def show; end
 
-  # GET /plans/new
   def new
     @plan = Plan.new
     authorize @plan
   end
 
-  # GET /plans/1/edit
   def edit; end
 
-  # POST /plans or /plans.json
-  def create # rubocop:todo Metrics/AbcSize
+  def create
     @plan = Plan.new(plan_params)
     authorize @plan
     @plan.admin_id = current_user.id
@@ -52,7 +45,6 @@ class PlansController < ApplicationController
 
   def destroy
     @plan.destroy
-
     respond_to do |format|
       format.html { redirect_to plans_url, notice: 'Plan was successfully destroyed.' }
       format.json { head :no_content }
@@ -61,12 +53,11 @@ class PlansController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_plan
     @plan = Plan.find(params[:id])
+    authorize @plan
   end
 
-  # Only allow a list of trusted parameters through.
   def plan_params
     params.require(:plan).permit(:name, :monthly_fee)
   end

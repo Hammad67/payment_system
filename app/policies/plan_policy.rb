@@ -9,7 +9,7 @@ class PlanPolicy < ApplicationPolicy
   end
 
   def index?
-    @user.type == 'Admin' or  @user.type == 'Buyer'
+    @user.type == 'Admin'
   end
 
   def new?

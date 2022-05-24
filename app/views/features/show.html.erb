@@ -1,25 +1,40 @@
-<p id="notice"><%= notice %></p>
+<div class="card card p-3 bg-light card-body"><h1>Feature Details</h1></div>
+  <div class="mt-4 p-5 bg-light text-dark rounded shadow p-3 mb-5 bg-body rounded">
+    <ul class="list-group list-group-flush d-grid gap-3">
+      <li class="list-group-item fw-bold">
+        <div class="row">
+          <div class="col-3"><h6>FeatureName:</h6></div>
+          <div class="col-3"><h6> <%= @feature.name %> </h6></div>
+        </div>
+      </li>
+      <li class="list-group-item fw-bold">
+        <div class="row">
+          <div class="col-3"><h6>Unit Price:</h6></div>
+          <div class="col-3"><h6>  <%= @feature.unit_price %></h6></div>
+        </div>
+      </li>
+      <li class="list-group-item fw-bold">
+        <div class="row">
+          <div class="col-3"><h6>Max Unit Limit:</h6></div>
+          <div class="col-3"><h6><%= @feature.max_unit_limit %></h6></div>
+        </div>
+      </li>
+      <li class="list-group-item fw-bold">
+        <%if current_user.type=="Buyer"%>
+         <%if current_user.subscriptions.where(is_active:true).find_by(plan_id:"#{params[:plan_id]}").present?%>
+           <% @feature_usage = Featureusage.find_by(plan_id: params[:plan_id], feature_id: @feature.id, buyer_id: current_user.id) %>
+          <%if @feature_usage.present? %>
+              <%=link_to "edit",edit_feature_featureusage_path(@feature, @feature_usage, :plan_id => params[:plan_id]),class:"btn btn-success",method: :get%>
+          <%else%>
+              <%=link_to "new",new_feature_featureusage_path(@feature, :plan_id => params[:plan_id]),class:"btn btn-success",method: :get%>
+          <%end%>
+         <%end%>
+          <%= link_to 'Back', root_path,class:"btn btn-danger"%>
+         <%else%>
+         <a href="<%=edit_feature_path(@feature)%>" class="card-link btn btn-warning">Edit</a>
+         <a href="<%=features_path%>" class="card-link btn btn-danger">Back</a>
+         <%end%>
+      </li>
+    </ul>
 
-<p>
-  <strong>Name:</strong>
-  <%= @feature.name %>
-</p>
-
-<p>
-  <strong>Code:</strong>
-  <%= @feature.code %>
-</p>
-<p>
-  <strong>Unit Price:</strong>
-  <%= @feature.unit_price %>
-</p>
-<p>
-  <strong>Max Unit Limit:</strong>
-  <%= @feature.max_unit_limit %>
-</p>
-<%if current_user.type=="Buyer"%>
-<%if current_user.subscriptions.find_by(plan_id:"#{params[:plan_id]}").present?%>
- <%=link_to "Click if your are using extra units of feature",new_feature_featureusage_path(@feature,@feature_usage,:plan_id => params[:plan_id]),class:"btn btn-success",method: :get%>
- <%end%>
- <%end%>
-<%= link_to 'Back', root_path,class:"btn btn-danger"%>
+  </div>
