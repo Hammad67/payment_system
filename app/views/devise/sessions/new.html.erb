@@ -1,26 +1,19 @@
-<h2>Log in</h2>
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+<div class="card card p-3 bg-light">
+  <div id="login-form-div">
+    <div id="img-div"><%= image_tag("avtar.png", height: '232', width: '232') %></div>
+    <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="card-body">
+        <div class="field">
+          <%= f.input :email, placeholder: "name@example.com", autofocus: true, autocomplete: "email" %>
+        </div>
+        <div class="field">
+          <%= f.input :password, placeholder: "Enter Your Password", autocomplete: "current-password" %>
+        </div>
+        <div class="actions " id="button-login">
+          <%= f.submit "Log in", class: "btn btn-outline-primary" %>
+        </div>
+    <% end %>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
   </div>
-<% end %>
-
+</div>
 <%= render "devise/shared/links" %>

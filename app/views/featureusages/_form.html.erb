@@ -1,4 +1,7 @@
-<h1>Enter unit which you use extra</h1>
+<% if @featureusage.no_of_exeeded_units.present?&&@featureusage.no_of_exeeded_units > 0 %>
+  <h6 class="btn btn-danger">You are now using Extra Features your exeeding units are below</h6>
+  <h1><%=@featureusage.no_of_exeeded_units%></h1>
+<%end%>
 <%= simple_form_for([@feature, @featureusage]) do |form| %>
   <% if @featureusage.errors.any? %>
     <div id="error_explanation">

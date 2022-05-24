@@ -1,17 +1,19 @@
-# frozen_string_literal: true
-
 class FeaturesController < ApplicationController
-  before_action :set_feature, only: %i[show edit update destroy] # rubocop:todo Rails/LexicallyScopedActionFilter
-  def new
-    @feature = Feature.new
+  before_action :set_feature, only: %i[show edit update destroy]
+  def index
+    @feature = Feature.all
+    authorize @feature
   end
 
-  def create # rubocop:todo Metrics/AbcSize
-    @feature = Feature.new(feature_params)
+  def new
+    @feature = Feature.new
     authorize @feature
+  end
+
+  def create
+    @feature = Feature.new(feature_params)
     @feature.admin_id = current_user.id
     @feature.plan_id = params[:feature][:plan_id]
-
     respond_to do |format|
       if @feature.save
         format.html { redirect_to feature_url(@feature), notice: 'feature was successfully created.' }
@@ -23,8 +25,10 @@ class FeaturesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /features/1 or /features/1.json
+  def edit; end
+
   def update
+    authorize @feature
     respond_to do |format|
       if @feature.update(feature_params)
         @feature.admin_id = current_user.id
@@ -37,8 +41,8 @@ class FeaturesController < ApplicationController
     end
   end
 
-  # DELETE /features/1 or /features/1.json
   def destroy
+    authorize @feature
     @feature.destroy
 
     respond_to do |format|
@@ -51,12 +55,10 @@ class FeaturesController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_feature
     @feature = Feature.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def feature_params
     params.require(:feature).permit(:name, :code, :unit_price, :max_unit_limit)
   end

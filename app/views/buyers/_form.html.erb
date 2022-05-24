@@ -1,38 +1,28 @@
-<h1>Buyers#new</h1>
-<%= form_with model: buyer , local:true do |f| %>
-<% if buyer.errors.any? %>
-  <% buyer.errors.full_messages.each do |message|%>\
+<%= simple_form_for @buyer do |f| %>
+   <div class="card card p-3 bg-gray">
+      <h4 style="color: black">Add Buyer</h4>
+      <div style= "class:card-body bd-light;">
+<% if @buyer.errors.any? %>
+  <% @buyer.errors.full_messages.each do |message|%>\
   <h6><%= message %> </h6>
   <%end%>
 <%end%>
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true %>
-  </div>
+ <%= f.input :name %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+<%= f.input :email %>
 
+<%= f.input :password %>
 
-  <div class="field">
-    <%= f.label :password %>
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>
     <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-<div class="form-group">
- <%= f.label :avatar %>
-<% if buyer.avatar.nil?%><br />Current: <%= current_user.avatar.filename.to_s %>
+<% if @buyer.avatar.nil?%><br />Current: <%= current_user.avatar.filename.to_s %>
 <%else%>
+<%= f.file_field :avatar, class: "form-control" %>
+<% end %>
+  <%= f.submit "Create Buyer", id:"button-id",class: "btn btn-success" %>
+  <%= link_to 'Back', root_path,class:"btn btn-danger",id:"button-id2" %>
+<% end %>
+ </div>
+ </div>
 
-<div class="col-sm-8"><%= f.file_field :avatar, class: "form-control" %></div>
-</div>
-<% end %>
- <div class="field">
-  <div class="actions">
-    <%= f.submit  %>
-  </div>
-<% end %>

@@ -1,11 +1,11 @@
 class Buyer < User
-  has_many :subscriptions
+  has_many :subscriptions,dependent: :destroy
   has_many :plans, through: :subscriptions
-  has_many :featureusages
-  has_many :transactions
-  validates :name, presence: true
+  has_many :featureusages,dependent: :destroy
+  has_many :transactions,dependent: :destroy
+  validates :name, presence: true,uniqueness: true
   after_create :send_email_invite, :stripe_customer
-  after_update :send_email_invite, :update_stripe_customer
+
   has_one_attached :avatar
   validate :avatar_format
 
@@ -24,17 +24,6 @@ class Buyer < User
   end
 
   def stripe_customer
-    stripe_cust = Stripe::Customer.create({
-                                            email: email.to_s
-                                          })
-    update(stripe_cust_id: stripe_cust.id)
+    StripeCustomer.new.new_stripe_customer(self)
   end
-
-  def update_stripe_customer
-    stripe_cust = Stripe::Customer.update(
-      stripe_cust_id.to_s,
-      email: email.to_s
-    )
-  end
-
 end
