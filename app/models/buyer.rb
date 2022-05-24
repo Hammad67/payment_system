@@ -4,7 +4,7 @@ class Buyer < User
   has_many :featureusages, dependent: :destroy
   has_many :transactions, dependent: :destroy
   validates :name, presence: true, uniqueness: true
-  validates :name, length: { minimum: 15, maximum: 30 }
+  validates :name, length: { minimum: 10, maximum: 30 }
   after_create :send_email_invite, :stripe_customer
 
   has_one_attached :avatar
@@ -25,6 +25,6 @@ class Buyer < User
   end
 
   def stripe_customer
-    StripeCustomer.new.new_stripe_customer(self)
+    StripeService.new.new_stripe_customer(self)
   end
 end

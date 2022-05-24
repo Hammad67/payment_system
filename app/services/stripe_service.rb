@@ -1,4 +1,4 @@
-class StripeCustomer
+class StripeService
   def new_stripe_customer(buyer)
     stripe_cust = Stripe::Customer.create({
                                             email: buyer.email
@@ -17,7 +17,7 @@ class StripeCustomer
   end
 
   def update_stripe_customer(stripe_cust_id, buyer)
-    stripe_cust = Stripe::Customer.update(
+    Stripe::Customer.update(
       stripe_cust_id.to_s,
       email: buyer.email.to_s
     )
@@ -28,23 +28,23 @@ class StripeCustomer
   end
 
   def create_subscribtion(current_user, plan)
-    subscription = Stripe::Subscription.create({
-                                                 customer: current_user.stripe_cust_id.to_s,
-                                                 items: [
-                                                   { price: plan.stripe_plan_id.to_s }
-                                                 ]
-                                               })
+    Stripe::Subscription.create({
+                                  customer: current_user.stripe_cust_id.to_s,
+                                  items: [
+                                    { price: plan.stripe_plan_id.to_s }
+                                  ]
+                                })
   end
 
   def create_source(customer, token)
-    customor_source = Stripe::Customer.create_source(
+    Stripe::Customer.create_source(
       customer.to_s,
       { source: token.to_s }
     )
   end
 
   def update_subscription(subscription)
-    subscription_update = Stripe::Subscription.update(
+    Stripe::Subscription.update(
       subscription.stripe_subscription_id.to_s,
       {
         cancel_at_period_end: true
@@ -53,11 +53,11 @@ class StripeCustomer
   end
 
   def createstripeplan(monthly_fee, name)
-    plan = Stripe::Price.create({
-                                  unit_amount: (monthly_fee * 100).to_s,
-                                  currency: 'usd',
-                                  recurring: { interval: 'month' },
-                                  product_data: { name: name.to_s }
-                                })
+    Stripe::Price.create({
+                           unit_amount: (monthly_fee * 100).to_s,
+                           currency: 'usd',
+                           recurring: { interval: 'month' },
+                           product_data: { name: name.to_s }
+                         })
   end
 end
