@@ -1,0 +1,24 @@
+<h1>Enter unit which you use extra</h1>
+<%= simple_form_for([@feature, @featureusage]) do |form| %>
+  <% if @featureusage.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@featureusage.errors.count, "error") %> prohibited this featureusage from being saved:</h2>
+
+      <ul>
+        <% @featureusage.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.input :total_extra_units %>
+  </div>
+<div class="field">
+     <%= form.hidden_field :plan_id,value: params[:plan_id] %>
+  </div>
+  <div class="actions">
+    <%= form.submit "Save" %>
+  </div>
+<% end %>

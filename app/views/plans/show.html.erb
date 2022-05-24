@@ -1,0 +1,10 @@
+<p id="notice"><%= notice %></p>
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">Plan-Name :<%= @plan.name %></h5>
+    <h6 class="card-subtitle mb-2 text-muted">Plan-Monthly-Fee :<%= @plan.monthly_fee %>$</h6>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="<%=edit_plan_path(@plan)%>" class="card-link btn btn-warning">Edit</a>
+      <a href="<%=plans_path%>" class="card-link btn btn-danger">Back</a>
+  </div>
+</div>

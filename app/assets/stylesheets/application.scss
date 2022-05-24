@@ -14,3 +14,9 @@
  *= require_self
  */
  @import "bootstrap/scss/bootstrap";
+ @import "buyers.scss";
+
+ .avatar {
+  border-radius: 50%;
+  // also might be good to set width and height
+}

@@ -1,0 +1,34 @@
+<%= simple_form_for @feature  do |form| %>
+  <% if @feature.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@feature.errors.count, "error") %> prohibited this plan from being saved:</h2>
+
+      <ul>
+        <% @feature.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.input :name %>
+  </div>
+
+  <div class="field">
+    <%= form.input :code %>
+  </div>
+ <div class="field">
+    <%= form.input :unit_price %>
+  </div>
+ <div class="field">
+    <%= form.input :max_unit_limit %>
+  </div>
+  <div class="field">
+    <%= form.select :plan_id, Plan.all.collect { |p| [ p.name, p.id ] }, {prompt: "Select plan from below"}, class: "form-control" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

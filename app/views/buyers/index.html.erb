@@ -1,3 +1,35 @@
+   <%if current_user.type=="Buyer"%>
 <h1>BuyersDashbord</h1>
 <p>Welcome to Our site.....</p><h6><%=current_user.name%></h6>
+<p><%@plan.each do |plan|%>
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h4 class="card-title">Plan Name:<%=plan.name%></h4>
+    <p class="card-text">Plan Monthly Fee<%=plan.monthly_fee%></p>
+       <h3>Features</h3>
+    <%plan.features.each do |plan_feature|%>
+
+    <p><%=link_to "#{plan_feature.name}",feature_path(plan_feature.id,:plan_id => plan.id),class:"btn btn-danger"%></p>
+    <%end%>
+
+     <%if current_user.subscriptions.where(is_active:true).find_by(plan_id:"#{plan.id}").present? && current_user.type=="Buyer"%>
+       <button type="button" class="btn btn-success">Subscribed</button>
+        <%current_user.subscriptions.each do |subscription|%>
+        <%=link_to "Unsubscribe",subscription, method: :get ,class:"btn btn-success"%>
+        <%end%>
+
+     <%else%>
+
+      <%if current_user.stripe_source_id.present?%>
+      <%=button_to "Subscribe",subscriptions_path(:plan_id => plan.id),class:"btn btn-primary",method: :post%>
+
+     <%else%>
+    <%=link_to "Subscribe",new_subscription_path(:plan_id => plan.id),class:"btn btn-primary",method: :get%>
+    <%end%>
+     <%end%>
+  </div>
+</div>
+<%end%>
+
  <%= button_to "Sign out", destroy_user_session_path, method: :delete,class:"btn btn-danger" %>
+<%end%>

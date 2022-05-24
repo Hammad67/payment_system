@@ -1,4 +1,32 @@
 <h1>Admins#index</h1>
+<h1>All Cuurent Subscriptions</h1>
+<p><%@subscription.all.each do |subscription|%>
+
+<%if subscription.plan.present?%>
+<h1>Buyer Name : <%=subscription.buyer.name%>
+<h6>Plan Name :<%=subscription.plan.name%></h6>
+<p>Plan_monthly fee: <%=subscription.plan.monthly_fee%></p>
+<h6>Associated Feature with Plan <%=subscription.plan.name%></h6>
+   <%subscription.plan.features.each do |feature|%>
+   <p>FeatureName:<%=feature.name%></p>
+   <p>FeatureCode<%=feature.code%></p>
+   <p>FeatureUnitPrice<%=feature.unit_price%></p>
+   <p>Feature max_unit_limit<%=feature.max_unit_limit%></p>
+    <%if Featureusage.find_by(feature_id:feature,plan_id:subscription.plan.id,buyer_id:subscription.buyer.id).present?%>
+    <% feature_extract=Featureusage.find_by(feature_id:feature,plan_id:subscription.plan.id,buyer_id:subscription.buyer.id)%>
+   <p>Total Extra Units</p><%= feature_extract.total_extra_units%> 
+   <p>No of no_of_exeeded_units<%=feature_extract.no_of_exeeded_units%></p>
+   <%end%>
+   <%end%>
+   <%if subscription.is_active?%>
+      <h5>Start date of Subscription: <%=subscription.start_date%></h1>
+<h5>End date of Subscription: <%=subscription.end_date%></h1>
+<%end%>
+<%end%>
+<%end%>
+
 <%=link_to "Add new User(Buyer)",new_buyer_path%>
+<%=link_to "Add new Plan",new_plan_path%>
+<%=link_to "Add new Feature",new_feature_path%>
 <%= button_to "Sign out", destroy_user_session_path, method: :delete,class:"btn btn-danger" %>
 

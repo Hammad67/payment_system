@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @feature.name %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @feature.code %>
+</p>
+<p>
+  <strong>Unit Price:</strong>
+  <%= @feature.unit_price %>
+</p>
+<p>
+  <strong>Max Unit Limit:</strong>
+  <%= @feature.max_unit_limit %>
+</p>
+<%if current_user.type=="Buyer"%>
+<%if current_user.subscriptions.find_by(plan_id:"#{params[:plan_id]}").present?%>
+ <%=link_to "Click if your are using extra units of feature",new_feature_featureusage_path(@feature,@feature_usage,:plan_id => params[:plan_id]),class:"btn btn-success",method: :get%>
+ <%end%>
+ <%end%>
+<%= link_to 'Back', root_path,class:"btn btn-danger"%>

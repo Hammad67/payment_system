@@ -1,7 +1,7 @@
 <h1>Buyers#new</h1>
-<%= form_with model: @user ,url:buyers_path, local:true do |f| %>
-<% if @user.errors.any? %>
-  <% @user.errors.full_messages.each do |message|%>\
+<%= form_with model: @buyer ,url:buyers_path, local:true do |f| %>
+<% if @buyer.errors.any? %>
+  <% @buyer.errors.full_messages.each do |message|%>\
   <h6><%= message %> </h6>
   <%end%>
 <%end%>
@@ -9,12 +9,12 @@
     <%= f.label :name %><br />
     <%= f.text_field :name, autofocus: true %>
   </div>
- 
+
   <div class="field">
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
   </div>
-   
+
 
   <div class="field">
     <%= f.label :password %>
@@ -25,18 +25,13 @@
   </div>
 <div class="form-group">
  <%= f.label :avatar %>
-<% if @user.avatar.nil?%><br />Current: <%= current_user.avatar.filename.to_s %>
+<% if @buyer.avatar.nil?%><br />Current: <%= current_user.avatar.filename.to_s %>
 <%else%>
 
 <div class="col-sm-8"><%= f.file_field :avatar, class: "form-control" %></div>
 </div>
 <% end %>
  <div class="field">
-  
-
-
-<%= f.select :type, options_for_select(User.types.map { |key, value| [key.humanize, key] }), {prompt: "Select Type of User..."}, class: "form-control" %>
-   </div>
   <div class="actions">
     <%= f.submit  %>
   </div>
