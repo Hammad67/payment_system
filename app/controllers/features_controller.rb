@@ -25,11 +25,10 @@ class FeaturesController < ApplicationController
     end
   end
 
-     def edit
-
-     end
+  def edit; end
 
   def update
+    authorize @feature
     respond_to do |format|
       if @feature.update(feature_params)
         @feature.admin_id = current_user.id
@@ -43,6 +42,7 @@ class FeaturesController < ApplicationController
   end
 
   def destroy
+    authorize @feature
     @feature.destroy
 
     respond_to do |format|
@@ -57,7 +57,6 @@ class FeaturesController < ApplicationController
 
   def set_feature
     @feature = Feature.find(params[:id])
-    authorize @feature
   end
 
   def feature_params
