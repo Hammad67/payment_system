@@ -1,21 +1,21 @@
-require: 
+require:
   - rubocop-performance
   - rubocop-rails
- 
- 
+
+
 AllCops:
   # Exclude auto-generated files by Rails
   TargetRubyVersion: 2.7
-  TargetRailsVersion: 5.2
+  TargetRailsVersion: 6.0
   Exclude:
     - 'db/schema.rb'
     - 'node_modules/**/*'
     - 'vendor/bundle/**/*'
     - 'bin/**/*'
-    
+
 Layout/LineLength:
   Max: 120
-  
+
 Metrics/MethodLength:
   Max: 23
 
@@ -29,4 +29,4 @@ Lint/AmbiguousBlockAssociation:
     - spec/**/*
 
 Style/Documentation:
-  Enabled: false
+  Enabled: true
