@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :plans
   resources :buyers
   resources :admins, only: %i[index]
-  resources :subscriptions, only: %i[new create show]
+  resources :subscriptions, only: %i[new create show update]
   devise_for :users, skip: %i[registrations]
   resources :webhooks, only: %i[create]
 

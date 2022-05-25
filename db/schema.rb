@@ -37,8 +37,8 @@ ActiveRecord::Schema.define(version: 2022_05_24_182726) do
   end
 
   create_table "features", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "code", null: false
+    t.string "name", limit: 30, null: false
+    t.string "code", limit: 20, null: false
     t.integer "unit_price", null: false
     t.integer "max_unit_limit", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 2022_05_24_182726) do
   end
 
   create_table "plans", force: :cascade do |t|
-    t.string "name", null: false
+    t.string "name", limit: 30, null: false
     t.integer "monthly_fee", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -103,7 +103,7 @@ ActiveRecord::Schema.define(version: 2022_05_24_182726) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "name", limit: 10
+    t.string "name", limit: 20
     t.integer "type", default: 0
     t.string "stripe_cust_id"
     t.string "stripe_source_id"

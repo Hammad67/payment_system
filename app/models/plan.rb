@@ -1,6 +1,6 @@
 class Plan < ApplicationRecord
   validates :name, presence: true, uniqueness: true
-  validates :name, length: { minimum: 10, maximum: 30 }
+  validates :name, length: { minimum: 10, maximum: 20 }
   validates :monthly_fee, presence: true
   belongs_to :admin
   has_many :features, dependent: :destroy
