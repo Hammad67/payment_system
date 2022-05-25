@@ -6,7 +6,6 @@ class WebhooksController < ApplicationController
     when 'invoice.payment_failed'
       WebhooksService.new.invoicepaymentfailed(event)
 
-    when 'charge.failed'
 
     when 'customer.subscription.updated'
       WebhooksService.new.customer_subscribtion_updated_event(event)

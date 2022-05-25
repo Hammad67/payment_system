@@ -14,6 +14,7 @@ class StripeService
                             customer: customer_id.to_s,
                             description: 'Extra feature charge'
                           })
+  
   end
 
   def update_stripe_customer(stripe_cust_id, buyer)
