@@ -31,7 +31,7 @@ class FeatureusagesController < ApplicationController
     if @featureusage.update(total_extra_units: (params[:featureusage][:total_extra_units]).to_s)
       redirect_to feature_featureusage_path(@feature, @featureusage)
     else
-      format.html render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 

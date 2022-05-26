@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class Plan < ApplicationRecord
+  has_many :features_plans, dependent: :destroy
+  has_many :features, through: :features_plans
   validates :name, presence: true
   validates :name, length: { minimum: 10, maximum: 20 }
   validates :monthly_fee, presence: true
-  has_and_belongs_to_many :features
   has_many :subscriptions, dependent: :destroy
   has_many :buyers, through: :subscriptions
   has_many :transactions, dependent: :destroy
