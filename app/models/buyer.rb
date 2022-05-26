@@ -17,11 +17,7 @@ class Buyer < User
   def avatar_format
     return unless avatar.attached?
 
-    if avatar.blob.content_type.start_with? 'image/'
-
-    else
-      errors.add(:avatar, 'needs to be an image')
-    end
+    errors.add(:avatar, 'needs to be an image') unless avatar.blob.content_type.start_with? 'image/'
   end
 
   def send_email_invite

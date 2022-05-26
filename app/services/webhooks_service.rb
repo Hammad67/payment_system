@@ -63,14 +63,22 @@ class WebhooksService
     amount_due = event['amount_due']
     invoice_pdf = event['invoice_pdf']
     amount_due /= 100
+    find_plan_and_transaction(plan_id, customer_id, amount_due, invoice_pdf)
+  end
+
+  def find_plan_and_transaction(plan_id, customer_id, amount_due, invoice_pdf)
     plan = Plan.find_by(stripe_plan_id: plan_id.to_s)
     buyer = Buyer.find_by(stripe_cust_id: customer_id.to_s)
-    @subscription = Subscription.find_by(buyer_id: buyer.id.to_s, plan_id: plan.id.to_s)
+    @subscription = find_subscribtion_payment(plan, buyer)
     @subscription.update(is_active: false)
     @transaction = Transaction.create!(billing_day: @subscription.end_date, plan_id: @subscription.plan_id,
                                        buyer_id: @subscription.buyer_id, subscription_id: @subscription.id,
                                        amount: amount_due.to_s, is_successfull: false)
     send_invoice(buyer, invoice_pdf) if buyer.present?
+  end
+
+  def find_subscribtion_payment(plan, buyer)
+    Subscription.find_by(buyer_id: buyer.id.to_s, plan_id: plan.id.to_s)
   end
 
   def invoice_of_transaction(extra_charge, buyer)
