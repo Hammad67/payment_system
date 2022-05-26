@@ -7,11 +7,11 @@
   <h6><%= message %> </h6>
   <%end%>
 <%end%>
- <%= f.input :name %>
+ <%= f.input :name ,placeholder: "Your Name",maxlength: 15,required: true %>
 
-<%= f.input :email %>
+<%= f.input :email ,placeholder: "Your Password",maxlength: 25,required: true%>
 
-<%= f.input :password %>
+<%= f.input :password ,placeholder: "Your Name",required: true%>
 
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>

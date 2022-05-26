@@ -1,0 +1,18 @@
+<%if @subscription.present?%>
+<%@subscription.all.each do |subscription|%>
+  <div class="card col-4">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h5 class="card-title">BuyerName:<%=subscription.buyer.name%></h5>
+                 <p class="card-text">Plan Nmae:<%=subscription.plan.name%></p>
+                 <p class="card-text">Monthly Fee:<%=subscription.plan.monthly_fee%></p>
+                 <p class="card-text">StartDateofSubscription:<%=subscription.start_date%></p>
+                 <p class="card-text">End date of Subscription:<%=subscription.end_date%></p>
+             </div>
+        </div>
+    </div>
+<%end%>
+<%end%>
+<div class="actions">
+  <%= link_to 'Back', root_path,class:"btn btn-danger",id:"button-id2" %>
+  </div>

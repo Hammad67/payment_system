@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -24,6 +26,7 @@ gem 'pg'
 gem 'pry'
 gem 'pundit'
 gem 'rubocop-rails', require: false
+gem 'select2-rails'
 gem 'simple_form'
 gem 'stripe'
 gem 'stripe_event'
@@ -42,7 +45,6 @@ group :development, :test do
   gem 'rubocop'
   gem 'rubocop-minitest' # or gem 'rubocop-rspec' depending on your test suite
   gem 'rubocop-performance'
-  gem 'rubocop-rails'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
 end

@@ -1,6 +1,12 @@
+# frozen_string_literal: true
+
 class SubscriptionsController < ApplicationController
   before_action :set_subscription, only: %i[show edit update]
   def new; end
+
+  def index
+    @subscription = current_user.subscriptions.all.where(is_active: true)
+  end
 
   def create
     if current_user.stripe_source_id.present?
@@ -46,13 +52,16 @@ class SubscriptionsController < ApplicationController
   def create_subscribtion(plan_id)
     plan = Plan.find_by(id: plan_id)
     subscription = StripeService.new.create_subscribtion(current_user, plan)
-
     @subscription = Subscription.create!(buyer_id: current_user.id, plan_id: plan.id,
-
-                                         stripe_subscription_id: subscription.id, start_date: Time.zone.at(subscription.current_period_start), end_date: Time.zone.at(subscription.current_period_end), is_active: true)
+                                         stripe_subscription_id: subscription.id,
+                                         start_date: Time.zone.at(subscription.current_period_start),
+                                         end_date: Time.zone.at(subscription.current_period_end),
+                                         is_active: true)
     amount = @subscription.plan.monthly_fee
     @transaction = Transaction.create!(billing_day: @subscription.end_date, plan_id: @subscription.plan_id,
-                                       buyer_id: @subscription.buyer_id, subscription_id: @subscription.id, amount: amount.to_s)
+                                       buyer_id: @subscription.buyer_id,
+                                       subscription_id: @subscription.id,
+                                       amount: amount.to_s)
     redirect_to @subscription
   end
 end

@@ -15,22 +15,18 @@
   <% end %>
 
   <div class="field">
-    <%= form.input :name %>
+    <%= form.input :name ,placeholder: "Feature Name",maxlength: 15,required: true%>
   </div>
 
   <div class="field">
-    <%= form.input :code %>
+    <%= form.input :code ,placeholder: "Product Code",maxlength: 12,required: true%>
   </div>
  <div class="field">
-    <%= form.input :unit_price %>
+    <%= form.input :unit_price ,placeholder: "Unit Price",maxlength: 6,required: true%>
   </div>
  <div class="field">
-    <%= form.input :max_unit_limit %>
+    <%= form.input :max_unit_limit ,placeholder: "Your Name",maxlength: 15,required: true %>
   </div>
-  <div class="field">
-    <%= form.select :plan_id, Plan.all.collect { |p| [ p.name, p.id ] }, {prompt: "Select plan from below"}, class: "form-control" %>
-  </div>
-
   <div class="actions">
    <%= form.submit "Create Feature", id:"button-id",class: "btn btn-success" %>
   <%= link_to 'Back', root_path,class:"btn btn-danger",id:"button-id2" %>

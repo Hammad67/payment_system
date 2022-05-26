@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class StripeService
- def new_stripe_customer(buyer)
+  def new_stripe_customer(buyer)
     stripe_cust = Stripe::Customer.create({
                                             email: buyer.email
                                           })
@@ -14,7 +16,6 @@ class StripeService
                             customer: customer_id.to_s,
                             description: 'Extra feature charge'
                           })
-  
   end
 
   def update_stripe_customer(stripe_cust_id, buyer)
@@ -53,7 +54,7 @@ class StripeService
     )
   end
 
-  def createstripeplan(monthly_fee, name)
+  def create_stripe_plan(monthly_fee, name)
     Stripe::Price.create({
                            unit_amount: (monthly_fee * 100).to_s,
                            currency: 'usd',

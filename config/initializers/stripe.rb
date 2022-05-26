@@ -8,4 +8,3 @@ Rails.configuration.stripe = {
   webhook: ENV['WEBHOOK']
 }
 Stripe.api_key = Rails.configuration.stripe[:secret_key]
-

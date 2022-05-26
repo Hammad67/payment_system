@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class WebhooksService
   def invoive_created(event)
     invoice_pdf = event['data']['object']['invoice_pdf']
@@ -11,14 +13,14 @@ class WebhooksService
 
   def check_overuse_calculations(subscription)
     feature_extra_array = []
-    subscription[:subscription].plan.features.each do |feature|
-      next unless feature.featureusages.present?
+    subscription.plan.features.each do |feature|
+      next if feature.featureusages.blank?
 
       feature_unit_price = feature.unit_price
       feature.featureusages.each do |feature_usage|
         total_extra_units = feature_usage.total_extra_units
         feature_no_of_exeeded_units = feature_usage.no_of_exeeded_units
-        next unless feature_usage.no_of_exeeded_units.present? && feature_usage.no_of_exeeded_units > 0
+        next unless feature_usage.no_of_exeeded_units.present? && feature_usage.no_of_exeeded_units.positive?
 
         total_price_of_feature_after_overuse = feature_usage.no_of_exeeded_units * feature_unit_price
         feature_extra_array.push(total_price_of_feature_after_overuse)
@@ -39,18 +41,15 @@ class WebhooksService
     stripe_customer_source = buyer_id.stripe_source_id
     plan_id = Plan.find_by(stripe_plan_id: plan_id.to_s)
     @subscription = find_subscribtion(subscription_id, buyer_id, plan_id)
-    if !cancel_at_period_end.present?
+    if cancel_at_period_end.blank?
       check_cancel_period(amount)
-      final_amount = check_overuse_calculations(subscription: @subscription)
-      extra_charge = stripe_charge(final_amount, stripe_customer_source, customer_id) if final_amount.present?
-      invoice_of_transaction(extra_charge, buyer_id) if final_amount.present?
     else
       @subscription.update(end_date: Time.zone.at(current_period_end), is_active: false)
       create_transaction(amount)
-      final_amount = check_overuse_calculations(subscription: @subscription)
-      extra_charge = stripe_charge(final_amount, stripe_customer_source, customer_id) if final_amount.present?
-      invoice_of_transaction(extra_charge, buyer_id) if final_amount.present?
     end
+    final_amount = check_overuse_calculations(@subscription)
+    extra_charge = stripe_charge(final_amount, stripe_customer_source, customer_id) if final_amount.present?
+    invoice_of_transaction(extra_charge, buyer_id) if final_amount.present?
   end
 
   def stripe_charge(final_amount, stripe_customer_source, customer_id)
@@ -63,7 +62,7 @@ class WebhooksService
     create_transaction(amount)
   end
 
-  def invoicepaymentfailed(event)
+  def invoice_payment_failed(event)
     customer_id = event['data']['object']['customer']
     plan_id = event['data']['object']['price']['id']
     amount_due = event['data']['object']['amount_due']

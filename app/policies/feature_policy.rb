@@ -2,7 +2,6 @@
 
 class FeaturePolicy < ApplicationPolicy
   class Scope < Scope
-
   end
 
   def index?

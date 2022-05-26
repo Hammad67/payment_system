@@ -14,7 +14,7 @@
         <li class="list-group-item fw-bold">
         <div class="row">
           <div class="col-3"><h6>Plan Name</h6></div>
-          <div class="col-3"><h6><%=subscription.plan.name%></h6></div>
+          <div class="col-3"><h6></h6><%=link_to "#{subscription.plan.name}",plan_path(subscription.plan_id) %></div>
         </div>
       </li>
        <li class="list-group-item fw-bold">
@@ -27,20 +27,7 @@
       <li class="list-group-item fw-bold">
         <div class="row">
           <div class="col-3"><h6>FeatureName:</h6></div>
-          <div class="col-3"><h6><%=feature.name%></h6></div>
-        </div>
-      </li>
-      <li class="list-group-item fw-bold">
-        <div class="row">
-          <div class="col-3"><h6>FeatureCode:</h6></div>
-          <div class="col-3"><h6><%=feature.code %></h6></div>
-        </div>
-      </li>
-
-       <li class="list-group-item fw-bold">
-        <div class="row">
-          <div class="col-3"><h6>FeatureMaxUnitLimit:</h6></div>
-          <div class="col-3"><h6><%= feature.max_unit_limit%></h6></div>
+          <div class="col-3"><h6><%=link_to "#{feature.name}",feature%></h6></div>
         </div>
       </li>
       <%feature_extract=checkfeatureusage(feature,subscription,buyer_id:subscription.buyer.id)%>
@@ -85,8 +72,6 @@
         </div>
         </li>
          </ul>
-      </div>
-      </div>
       </div>
 <%end%>
 <%end%>

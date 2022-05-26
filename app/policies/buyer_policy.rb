@@ -10,7 +10,6 @@ class BuyerPolicy < ApplicationPolicy
 
   def index?
     @user.type == 'Admin'
-
   end
 
   def new?
