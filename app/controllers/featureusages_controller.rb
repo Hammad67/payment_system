@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# All feature usages
 class FeatureusagesController < ApplicationController
   before_action :set_featureusage, only: %i[show edit update destroy]
   before_action :set_feature, only: %i[new create]
@@ -9,7 +12,7 @@ class FeatureusagesController < ApplicationController
   def show; end
 
   def new
-    @featureusage = @feature.featureusages.build unless @featureusage.present?
+    @featureusage = @feature.featureusages.build if @featureusage.blank?
   end
 
   def edit; end
@@ -18,33 +21,18 @@ class FeatureusagesController < ApplicationController
     @featureusage = @feature.featureusages.new(featureusage_params)
     @featureusage.buyer_id = current_user.id
     @featureusage.plan_id = params[:featureusage][:plan_id]
-    respond_to do |format|
-      if @featureusage.save
-        format.html do
-          redirect_to feature_featureusage_url(@feature, @featureusage),
-                      notice: 'Feature usage was successfully updated.'
-        end
-
-        format.json { render :show, status: :created, location:  @featureusage }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @featureusage.errors, status: :unprocessable_entity }
-      end
+    if @featureusage.save
+      redirect_to feature_featureusage_path(@feature, @featureusage)
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   def update
-    respond_to do |format|
-      if @featureusage.update(total_extra_units: (params[:featureusage][:total_extra_units]).to_s)
-        format.html do
-          redirect_to feature_featureusage_url(@feature, @featureusage),
-                      notice: 'Feature usage was successfully updated.'
-        end
-        format.json { render :show, status: :ok, location: @featureusage }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @featureusage.errors, status: :unprocessable_entity }
-      end
+    if @featureusage.update(total_extra_units: (params[:featureusage][:total_extra_units]).to_s)
+      redirect_to feature_featureusage_path(@feature, @featureusage)
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 

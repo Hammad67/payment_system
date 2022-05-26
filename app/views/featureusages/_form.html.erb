@@ -16,7 +16,7 @@
   <% end %>
 
   <div class="field">
-    <%= form.input :total_extra_units %>
+    <%= form.input :total_extra_units, placeholder: "Enter Your Daily Usage",maxlength: 6,required: true%>
   </div>
 <div class="field">
      <%= form.hidden_field :plan_id,value: params[:plan_id] %>

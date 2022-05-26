@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Root of our applications where request hits
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   include Pundit

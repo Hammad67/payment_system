@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
+# Add bulk columns
 class AddAdminIdToFeatures < ActiveRecord::Migration[6.0]
   def change
-    add_column :features, :admin_id, :integer, foreign_key: true
-    add_column :features, :plan_id, :integer, foreign_key: true
+    change_table :features, bulk: true do |t|
+      t.integer :admin_id, foreign_key: true
+      t.integer :plan_id, foreign_key: true
+    end
   end
 end

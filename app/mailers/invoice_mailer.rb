@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# used for sending invoice
 class InvoiceMailer < ApplicationMailer
   def invoicemail
     @usermail = params[:usermail]

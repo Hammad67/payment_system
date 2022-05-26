@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   resources :transactions, only: [:index]
   resources :features do
@@ -7,7 +9,7 @@ Rails.application.routes.draw do
   resources :plans
   resources :buyers
   resources :admins, only: %i[index]
-  resources :subscriptions, only: %i[new create show update]
+  resources :subscriptions, only: %i[new create show update index]
   devise_for :users, skip: %i[registrations]
   resources :webhooks, only: %i[create]
 

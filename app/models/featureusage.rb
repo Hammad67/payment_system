@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# featrue usage model
 class Featureusage < ApplicationRecord
   belongs_to :feature
   belongs_to :buyer
@@ -6,10 +9,10 @@ class Featureusage < ApplicationRecord
   before_save :exeeded_units
 
   def checkvalue
-    if Featureusage.find_by(id: id).present?
-      e = Featureusage.find_by(id: id).total_extra_units
-      errors.add(:base, 'Please enter The value which is above maximum value') if total_extra_units < e
-    end
+    return if Featureusage.find_by(id: id).blank?
+
+    e = Featureusage.find_by(id: id).total_extra_units
+    errors.add(:base, 'Please enter The value which is above maximum value') if total_extra_units < e
   end
 
   def exeeded_units

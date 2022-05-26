@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_24_182726) do
+ActiveRecord::Schema.define(version: 2022_05_26_071144) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,7 +44,13 @@ ActiveRecord::Schema.define(version: 2022_05_24_182726) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "admin_id"
-    t.integer "plan_id"
+  end
+
+  create_table "features_plans", id: false, force: :cascade do |t|
+    t.bigint "plan_id", null: false
+    t.bigint "feature_id", null: false
+    t.index ["feature_id", "plan_id"], name: "index_features_plans_on_feature_id_and_plan_id"
+    t.index ["plan_id", "feature_id"], name: "index_features_plans_on_plan_id_and_feature_id"
   end
 
   create_table "featureusages", force: :cascade do |t|
@@ -103,8 +109,10 @@ ActiveRecord::Schema.define(version: 2022_05_24_182726) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "name", limit: 20
+    t.string "name", limit: 20, null: false
+    t.integer "users", default: 0
     t.integer "type", default: 0
+    t.integer "integer", default: 0
     t.string "stripe_cust_id"
     t.string "stripe_source_id"
     t.index ["email"], name: "index_users_on_email", unique: true

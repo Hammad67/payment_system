@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Buyer Policy
 class BuyerPolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
@@ -10,7 +11,6 @@ class BuyerPolicy < ApplicationPolicy
 
   def index?
     @user.type == 'Admin'
-
   end
 
   def new?

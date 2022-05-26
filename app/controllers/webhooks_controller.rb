@@ -1,21 +1,24 @@
+# frozen_string_literal: true
+
+# All webhooks related requests
 class WebhooksController < ApplicationController
   skip_before_action :authenticate_user!
   skip_before_action :verify_authenticity_token
   def create
     case event['type']
     when 'invoice.payment_failed'
-      WebhooksService.new.invoicepaymentfailed(event)
-
+      WebhooksService.new.invoice_payment_failed(event['data']['object'])
 
     when 'customer.subscription.updated'
-      WebhooksService.new.customer_subscribtion_updated_event(event)
+      WebhooksService.new.customer_subscribtion_updated_event(event['data']['object'])
     when 'invoice.created'
-      WebhooksService.new.invoive_created(event)
+      WebhooksService.new.invoive_created(event['data']['object'])
     end
   end
 
   private
-    def event
-      @event ||= JSON.parse(request.body.read)
-    end
+
+  def event
+    @event ||= JSON.parse(request.body.read)
+  end
 end

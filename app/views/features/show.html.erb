@@ -19,6 +19,12 @@
           <div class="col-3"><h6><%= @feature.max_unit_limit %></h6></div>
         </div>
       </li>
+      <%if current_user.type=="Buyer"%>
+      <div class="container">
+         
+      </div>
+      <%end%>
+      </div>
       <li class="list-group-item fw-bold">
         <%if current_user.type=="Buyer"%>
          <%if current_user.subscriptions.where(is_active:true).find_by(plan_id:"#{params[:plan_id]}").present?%>

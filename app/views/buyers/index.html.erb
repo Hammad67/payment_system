@@ -10,7 +10,7 @@
     <p class="card-text">Plan Monthly Fee:<%=plan.monthly_fee%>$</p>
        <h3>Features</h3>
     <%plan.features.each do |plan_feature|%>
-
+        
     <strong><%=link_to "#{plan_feature.name}",feature_path(plan_feature.id,:plan_id => plan.id),class:"link-warning"%></strong>
     <%end%>
 

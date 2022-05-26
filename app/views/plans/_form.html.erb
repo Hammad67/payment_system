@@ -21,7 +21,10 @@
   <div class="field">
     <%= form.input :monthly_fee,placeholder: "Monthly fee in dollors", autofocus: true %>
   </div>
-
+   <div class="field">
+    <%= form.select :feature_ids, Feature.all.collect { |f| [ f.name, f.id ] }, {prompt: "Select features from below"}, class: "form-control" %>
+  </div>
+  f.select_tag :provision_ids, options_from_collection_for_select(Provision.all, :id, :name), multiple: true
   <div class="actions"id="button-id">
     <%= form.submit "Create Plan",class:"btn btn-success"%>
       <%= link_to 'Back', root_path,class:"btn btn-danger",method: :get %>

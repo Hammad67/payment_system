@@ -1,6 +1,6 @@
-
 # frozen_string_literal: true
 
+# Admin Policy
 class AdminPolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
