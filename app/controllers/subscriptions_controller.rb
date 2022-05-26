@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# All subscription related requests
 class SubscriptionsController < ApplicationController
   before_action :set_subscription, only: %i[show edit update]
   def new; end

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Application policy
 class ApplicationPolicy
   attr_reader :user, :record
 
@@ -35,7 +36,9 @@ class ApplicationPolicy
   def destroy?
     false
   end
+  # frozen_string_literal: true
 
+  # Application policy
   class Scope
     def initialize(user, scope)
       @user = user

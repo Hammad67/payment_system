@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# All feature usages
 class FeatureusagesController < ApplicationController
   before_action :set_featureusage, only: %i[show edit update destroy]
   before_action :set_feature, only: %i[new create]

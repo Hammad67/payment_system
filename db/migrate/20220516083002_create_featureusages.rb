@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Add featureusage table
 class CreateFeatureusages < ActiveRecord::Migration[6.0]
   def change
     create_table :featureusages do |t|

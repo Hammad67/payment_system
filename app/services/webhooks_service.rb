@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
+# Service for all Web hooks
 class WebhooksService
   def invoive_created(event)
     invoice_pdf = event['invoice_pdf']
-    amount_due = event['amount_due']
-    amount_paid = event['amount_paid']
-    name = event['customer_name']
     customer_email = event['customer_email']
     buyer = Buyer.find_by(email: customer_email.to_s)
     send_invoice(buyer, invoice_pdf) if buyer.present?
@@ -29,7 +27,6 @@ class WebhooksService
 
   def customer_subscribtion_updated_event(event)
     subscription_id = event['id']
-    current_period_start = event['current_period_start']
     current_period_end = event['current_period_start']
     plan_id = event['items']['data'][0]['plan']['id']
     amount = event['items']['data'][0]['plan']['amount'] / 100
@@ -71,7 +68,8 @@ class WebhooksService
     @subscription = Subscription.find_by(buyer_id: buyer.id.to_s, plan_id: plan.id.to_s)
     @subscription.update(is_active: false)
     @transaction = Transaction.create!(billing_day: @subscription.end_date, plan_id: @subscription.plan_id,
-                                       buyer_id: @subscription.buyer_id, subscription_id: @subscription.id, amount: amount_due.to_s, is_successfull: false)
+                                       buyer_id: @subscription.buyer_id, subscription_id: @subscription.id,
+                                       amount: amount_due.to_s, is_successfull: false)
     send_invoice(buyer, invoice_pdf) if buyer.present?
   end
 
@@ -84,7 +82,8 @@ class WebhooksService
 
   def create_transaction(amount_after_charge)
     @transaction = Transaction.create!(billing_day: @subscription.end_date, plan_id: @subscription.plan_id,
-                                       buyer_id: @subscription.buyer_id, subscription_id: @subscription.id, amount: amount_after_charge.to_s)
+                                       buyer_id: @subscription.buyer_id, subscription_id: @subscription.id,
+                                       amount: amount_after_charge.to_s)
   end
 
   def send_invoice(buyer, receipt)

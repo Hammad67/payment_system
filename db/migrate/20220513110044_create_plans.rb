@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Add Plans
 class CreatePlans < ActiveRecord::Migration[6.0]
   def change
     create_table :plans do |t|

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# All feature operations
 class FeaturesController < ApplicationController
   before_action :set_feature, only: %i[show edit update destroy]
   def index

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# The plan page of our apllication
 class PlansController < ApplicationController
   before_action :set_plan, only: %i[show edit update destroy]
   before_action :create_plan, only: %i[create]

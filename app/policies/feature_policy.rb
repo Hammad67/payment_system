@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Feature Policy
 class FeaturePolicy < ApplicationPolicy
   class Scope < Scope
   end

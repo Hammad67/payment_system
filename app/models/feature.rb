@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Feature model
 class Feature < ApplicationRecord
   has_many :features_plans, dependent: :destroy
   has_many :plans, through: :features_plans

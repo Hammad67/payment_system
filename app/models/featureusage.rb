@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# featrue usage model
 class Featureusage < ApplicationRecord
   belongs_to :feature
   belongs_to :buyer

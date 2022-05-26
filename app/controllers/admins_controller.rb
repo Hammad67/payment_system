@@ -2,6 +2,7 @@
 
 # frozen_string_literal: true
 
+# Add Admins controller for Admins requests
 class AdminsController < ApplicationController
   def index
     @subscription = Subscription.all

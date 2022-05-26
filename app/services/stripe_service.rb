@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# service for stripe services
 class StripeService
   def new_stripe_customer(buyer)
     stripe_cust = Stripe::Customer.create({

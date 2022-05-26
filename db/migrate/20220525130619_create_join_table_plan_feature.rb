@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 # Created for migration
-
 class CreateJoinTablePlanFeature < ActiveRecord::Migration[6.0]
   def change
     create_join_table :plans, :features do |t|
