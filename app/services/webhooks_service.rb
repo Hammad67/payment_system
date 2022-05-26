@@ -2,11 +2,11 @@
 
 class WebhooksService
   def invoive_created(event)
-    invoice_pdf = event['data']['object']['invoice_pdf']
-    amount_due = event['data']['object']['amount_due']
-    amount_paid = event['data']['object']['amount_paid']
-    name = event['data']['object']['customer_name']
-    customer_email = event['data']['object']['customer_email']
+    invoice_pdf = event['invoice_pdf']
+    amount_due = event['amount_due']
+    amount_paid = event['amount_paid']
+    name = event['customer_name']
+    customer_email = event['customer_email']
     buyer = Buyer.find_by(email: customer_email.to_s)
     send_invoice(buyer, invoice_pdf) if buyer.present?
   end
@@ -18,8 +18,6 @@ class WebhooksService
 
       feature_unit_price = feature.unit_price
       feature.featureusages.each do |feature_usage|
-        total_extra_units = feature_usage.total_extra_units
-        feature_no_of_exeeded_units = feature_usage.no_of_exeeded_units
         next unless feature_usage.no_of_exeeded_units.present? && feature_usage.no_of_exeeded_units.positive?
 
         total_price_of_feature_after_overuse = feature_usage.no_of_exeeded_units * feature_unit_price
@@ -30,13 +28,13 @@ class WebhooksService
   end
 
   def customer_subscribtion_updated_event(event)
-    subscription_id = event['data']['object']['id']
-    current_period_start = event['data']['object']['current_period_start']
-    current_period_end = event['data']['object']['current_period_start']
-    plan_id = event['data']['object']['items']['data'][0]['plan']['id']
-    amount = event['data']['object']['items']['data'][0]['plan']['amount'] / 100
-    cancel_at_period_end = event['data']['object']['cancel_at_period_end']
-    customer_id = event['data']['object']['customer']
+    subscription_id = event['id']
+    current_period_start = event['current_period_start']
+    current_period_end = event['current_period_start']
+    plan_id = event['items']['data'][0]['plan']['id']
+    amount = event['items']['data'][0]['plan']['amount'] / 100
+    cancel_at_period_end = event['cancel_at_period_end']
+    customer_id = event['customer']
     buyer_id = Buyer.find_by(stripe_cust_id: customer_id.to_s)
     stripe_customer_source = buyer_id.stripe_source_id
     plan_id = Plan.find_by(stripe_plan_id: plan_id.to_s)
@@ -63,10 +61,10 @@ class WebhooksService
   end
 
   def invoice_payment_failed(event)
-    customer_id = event['data']['object']['customer']
-    plan_id = event['data']['object']['price']['id']
-    amount_due = event['data']['object']['amount_due']
-    invoice_pdf = event['data']['object']['invoice_pdf']
+    customer_id = event['customer']
+    plan_id = event['price']['id']
+    amount_due = event['amount_due']
+    invoice_pdf = event['invoice_pdf']
     amount_due /= 100
     plan = Plan.find_by(stripe_plan_id: plan_id.to_s)
     buyer = Buyer.find_by(stripe_cust_id: customer_id.to_s)

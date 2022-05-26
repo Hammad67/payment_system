@@ -6,12 +6,12 @@ class WebhooksController < ApplicationController
   def create
     case event['type']
     when 'invoice.payment_failed'
-      WebhooksService.new.invoice_payment_failed(event)
+      WebhooksService.new.invoice_payment_failed(event['data']['object'])
 
     when 'customer.subscription.updated'
-      WebhooksService.new.customer_subscribtion_updated_event(event)
+      WebhooksService.new.customer_subscribtion_updated_event(event['data']['object'])
     when 'invoice.created'
-      WebhooksService.new.invoive_created(event)
+      WebhooksService.new.invoive_created(event['data']['object'])
     end
   end
 
