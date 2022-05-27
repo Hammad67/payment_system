@@ -48,7 +48,7 @@ class WebhooksService
   end
 
   def stripe_charge(final_amount, stripe_customer_source, customer_id)
-    StripeService.new.charge_customer(final_amount, stripe_customer_source, customer_id)
+    StripeService.charge_customer(final_amount, stripe_customer_source, customer_id)
   end
 
   def check_cancel_period(amount)

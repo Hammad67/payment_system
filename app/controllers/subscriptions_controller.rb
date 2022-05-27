@@ -21,7 +21,7 @@ class SubscriptionsController < ApplicationController
 
   def update
     @transaction = Transaction.find_by(subscription_id: @subscription.id.to_s)
-    subscription_update = StripeService.new.update_subscription(@subscription)
+    subscription_update = StripeService.update_subscription(@subscription)
     @subscription.update(is_active: false, end_date: Time.zone.at(subscription_update.canceled_at))
     redirect_to buyers_path notice: 'Your Subscription is unsubscribed Successfully'
   end
@@ -40,7 +40,7 @@ class SubscriptionsController < ApplicationController
 
   def create_customer_source(token)
     customer = current_user.stripe_cust_id
-    customor_source = StripeService.new.create_source(customer, token)
+    customor_source = StripeService.create_source(customer, token)
     if customor_source.present?
       current_user.update(stripe_source_id: customor_source.id)
       create_subscribtion(params[:plan_id]) if params[:plan_id].present?
@@ -56,7 +56,7 @@ class SubscriptionsController < ApplicationController
 
   def create_subscribtion(plan_id)
     plan = Plan.find_by(id: plan_id)
-    subscription = StripeService.new.create_subscribtion(current_user, plan)
+    subscription = StripeService.create_subscribtion(current_user, plan)
     @subscription = insert_subscription(subscription, plan)
     amount = @subscription.plan.monthly_fee
     create_transaction(amount, @subscription)

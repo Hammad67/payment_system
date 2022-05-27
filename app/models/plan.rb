@@ -13,7 +13,7 @@ class Plan < ApplicationRecord
 
   after_create :stripe_plan
   def stripe_plan
-    plan = StripeService.new.create_stripe_plan(monthly_fee, name)
+    plan = StripeService.create_stripe_plan(monthly_fee, name)
     update(stripe_plan_id: plan.id)
   end
 end

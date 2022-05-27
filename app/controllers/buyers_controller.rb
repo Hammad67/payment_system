@@ -28,7 +28,7 @@ class BuyersController < ApplicationController
     if @buyer.update(user_params)
       authorize @buyer
       stripe_cust_id = @buyer.stripe_cust_id
-      StripeService.new.update_stripe_customer(stripe_cust_id, @buyer)
+      StripeService.update_stripe_customer(stripe_cust_id, @buyer)
       InviteMailer.with(usermail: @buyer, password: @buyer.password).welcome_mail.deliver_now
       redirect_to @buyer
     else
@@ -39,7 +39,7 @@ class BuyersController < ApplicationController
   def show; end
 
   def destroy
-    StripeService.new.destroy_stripe_customer(@buyer)
+    StripeService.destroy_stripe_customer(@buyer)
     @buyer.destroy
     redirect_to root_path, notice: 'User was successfully destroyed.'
   end
