@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.configure do
-  
   config.action_mailer.default_url_options = { host: (ENV['APP_URL']).to_s, port: 3000 }
   config.action_mailer.smtp_settings = {
     address: 'smtp.gmail.com',
