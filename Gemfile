@@ -40,11 +40,16 @@ gem 'stripe_event'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
+gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
 
 group :development, :test do
+  gem 'factory_bot_rails', '~> 6.2'
+  gem 'rails-controller-testing'
+  gem 'rspec-rails', '>= 3.9.0'
   gem 'rubocop'
   gem 'rubocop-minitest' # or gem 'rubocop-rspec' depending on your test suite
   gem 'rubocop-performance'
+  gem 'shoulda-matchers', '~> 5.0'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
 end

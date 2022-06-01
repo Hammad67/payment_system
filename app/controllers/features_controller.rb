@@ -17,6 +17,7 @@ class FeaturesController < ApplicationController
     @feature = Feature.new(feature_params)
     @feature.admin_id = current_user.id
     if @feature.save
+
       redirect_to @feature
     else
       render :new, status: :unprocessable_entity
