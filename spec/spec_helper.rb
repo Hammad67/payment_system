@@ -1,3 +1,6 @@
+require 'simplecov'
+require 'pundit/matchers'
+SimpleCov.start
 require File.expand_path('../config/environment', __dir__)
 require 'rails/all'
 require 'shoulda/matchers'
@@ -90,7 +93,9 @@ RSpec.configure do |config|
   #   # the seed, which is printed after each run.
   #   #     --seed 1234
   #   config.order = :random
-  #
+  Pundit::Matchers.configure do |config|
+    config.user_alias = :buyer
+  end
   #   # Seed global randomization in this process using the `--seed` CLI option.
   #   # Setting this allows you to use `--seed` to deterministically reproduce
   #   # test failures related to randomization by passing the same `--seed` value

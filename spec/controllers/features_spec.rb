@@ -15,6 +15,7 @@ RSpec.describe FeaturesController, type: :controller do
       expect(response.status).to eq(200)
     end
   end
+
   describe 'Create action will ' do
     it 'will redirect to show action' do
       post :create,
@@ -23,6 +24,7 @@ RSpec.describe FeaturesController, type: :controller do
 
       expect(response.status).to eq(302)
     end
+
     it 'will render the new action again' do
       post :create,
            params: { feature: { name: '', code: '', unit_price: '',

@@ -50,6 +50,7 @@ group :development, :test do
   gem 'rubocop-minitest' # or gem 'rubocop-rspec' depending on your test suite
   gem 'rubocop-performance'
   gem 'shoulda-matchers', '~> 5.0'
+  gem 'stripe-ruby-mock', '~> 2.2', '>= 2.2.1'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
 end
@@ -62,11 +63,12 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
-
+gem 'simplecov', require: false, group: :test
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'
+    gem 'pundit-matchers', '~> 1.7.0'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
 end
