@@ -330,7 +330,7 @@ DEPENDENCIES
   pry
   puma (~> 4.1)
   pundit
-  pundit-matchers (~> 1.7.0)
+  pundit-matchers (~> 1.4, >= 1.4.1)
   rails (~> 6.0.1)
   rails-controller-testing
   rspec-rails (>= 3.9.0)

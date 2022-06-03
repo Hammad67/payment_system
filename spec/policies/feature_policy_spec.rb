@@ -1,12 +1,16 @@
-# require 'rails_helper'
+require 'rails_helper'
 
-# describe FeaturePolicy do
-#   subject { described_class.new(user, feature) }
+describe FeaturePolicy do
+  subject { FeaturePolicy }
 
-#   let(:feature) { FactoryBot.create(:feature) }
-#   context 'being an buyer' do
-#     let(:user) { User.create(:buyer) }
-#     it { is_expected.to permit_actions(%i[create update destroy]) }
-#     binding.pry
-#   end
-# end
+  permissions :index?, :create?, :new?, :update?, :edit?, :destroy? do
+    it 'denies access to Buyer' do
+      expect(subject).not_to permit(FactoryBot.create(:buyer))
+    end
+  end
+  permissions :show? do
+    it 'denies access to Admin' do
+      expect(subject).not_to permit(FactoryBot.create(:admin))
+    end
+   end
+end

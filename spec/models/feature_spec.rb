@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe feature, type: :model do
   subject do
-    feature = Feature.create(name: 'new1234567ssfs', code: 'anytggh657ing', unit_price: '20.to_s',
-                             max_unit_limit: '220.to_s')
+    @feature = Feature.create(name: 'new1234567ssfs', code: 'anytggh657ing', unit_price: 20,
+                              max_unit_limit: 200)
   end
 
   describe 'associations' do
@@ -16,10 +16,13 @@ RSpec.describe feature, type: :model do
     it { should validate_length_of(:name) }
     it { should validate_presence_of(:code) }
     it { should validate_length_of(:code) }
-    it { should validate_numericality_of(:max_unit_limit).is_greater_than(:unit_price) }
+    it { should validate_presence_of(:max_unit_limit) }
+    it 'should  allow max_unit greater than unit_price' do
+      expect(subject.max_unit_limit).to be >= subject.unit_price
+    end
   end
 
-  describe 'Negative Scenarios with nill data' do
+  describe 'Negative Scenarios with nill data for all attributes' do
     subject do
       Feature.new(name: 'Anything1234',
                   code: 'Lorem ipsum23415',
@@ -43,7 +46,7 @@ RSpec.describe feature, type: :model do
     end
   end
 
-  describe 'Negative Scenarios with invalid data' do
+  describe 'Negative Scenarios with invalid data of max_unit_price and min_unit_price' do
     subject do
       Feature.new(name: 'Anything34',
                   code: 'Lorm23415',

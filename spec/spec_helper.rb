@@ -1,5 +1,6 @@
 require 'simplecov'
 require 'pundit/matchers'
+require 'pundit/rspec'
 SimpleCov.start
 require File.expand_path('../config/environment', __dir__)
 require 'rails/all'

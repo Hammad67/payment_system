@@ -31,6 +31,7 @@ class StripeService
   end
 
   def self.create_subscribtion(current_user, plan)
+ 
     Stripe::Subscription.create({
                                   customer: current_user.stripe_cust_id.to_s,
                                   items: [

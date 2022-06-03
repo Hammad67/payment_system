@@ -8,6 +8,12 @@ RSpec.describe FeaturesController, type: :controller do
   before do
     sign_in user
   end
+  describe 'GET new' do
+    it 'New Action is running succefully with template' do
+      get :new
+      expect(response.status).to eq(200)
+    end
+  end
 
   describe 'GET index' do
     it 'Index Action is running succefully with template' do
