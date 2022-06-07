@@ -40,6 +40,7 @@ class StripeService
   end
 
   def self.create_source(customer, token)
+
     Stripe::Customer.create_source(
       customer.to_s,
       { source: token.to_s }

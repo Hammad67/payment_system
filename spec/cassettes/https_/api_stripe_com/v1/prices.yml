@@ -1,0 +1,94 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/prices
+    body:
+      encoding: UTF-8
+      string: unit_amount=220000&currency=usd&recurring[interval]=month&product_data[name]=jhaf7687sgfjajh
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/6.2.0
+      Authorization:
+      - Bearer sk_test_51Kz1xcIm6aRqt2RHGvuLqZEYSmSPEqMIWtVu6TxO51xtb057Sg0tUR0Su0yOFIcjEiXXr6GTYEDx2GYrHUNvf5F200Xjx20oPR
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"6.2.0","lang":"ruby","lang_version":"2.7.5 p203 (2021-11-24)","platform":"x86_64-darwin21","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Apples-MacBook-Pro.local 21.4.0 Darwin Kernel Version 21.4.0: Fri Mar 18 00:45:05
+        PDT 2022; root:xnu-8020.101.4~15/RELEASE_X86_64 x86_64","hostname":"Apples-MacBook-Pro.local"}'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Mon, 06 Jun 2022 10:22:46 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '611'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Idempotency-Key:
+      - aafcaa2e-c895-4c53-b8c0-18a453d5eecb
+      Original-Request:
+      - req_jEbO5RVnyY8At7
+      Request-Id:
+      - req_jEbO5RVnyY8At7
+      Stripe-Should-Retry:
+      - 'false'
+      Stripe-Version:
+      - '2020-08-27'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "price_1L7d58Im6aRqt2RHn03rH5DG",
+          "object": "price",
+          "active": true,
+          "billing_scheme": "per_unit",
+          "created": 1654510966,
+          "currency": "usd",
+          "livemode": false,
+          "lookup_key": null,
+          "metadata": {
+          },
+          "nickname": null,
+          "product": "prod_LpHeQEdeiJrI17",
+          "recurring": {
+            "aggregate_usage": null,
+            "interval": "month",
+            "interval_count": 1,
+            "trial_period_days": null,
+            "usage_type": "licensed"
+          },
+          "tax_behavior": "unspecified",
+          "tiers_mode": null,
+          "transform_quantity": null,
+          "type": "recurring",
+          "unit_amount": 220000,
+          "unit_amount_decimal": "220000"
+        }
+  recorded_at: Mon, 06 Jun 2022 10:22:46 GMT
+recorded_with: VCR 6.1.0

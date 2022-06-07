@@ -11,13 +11,13 @@
 /db/*.sqlite3
 /db/*.sqlite3-journal
 /db/*.sqlite3-*
-
+/c
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
 !/log/.keep
 !/tmp/.keep
-
+/coverage
 # Ignore uploaded files in development.
 /storage/*
 !/storage/.keep
