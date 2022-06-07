@@ -47,6 +47,8 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'rspec-rails', '>= 3.9.0'
   gem 'rubocop'
+  gem 'vcr'
+  gem 'webmock'
   gem 'rubocop-minitest' # or gem 'rubocop-rspec' depending on your test suite
   gem 'rubocop-performance'
   gem 'shoulda-matchers', '~> 5.0'

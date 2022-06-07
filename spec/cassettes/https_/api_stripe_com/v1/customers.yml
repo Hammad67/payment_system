@@ -1,0 +1,98 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/customers
+    body:
+      encoding: UTF-8
+      string: description=My+First+Test+Customer+%28created+for+API+docs+at+https%3A%2F%2Fwww.stripe.com%2Fdocs%2Fapi%29
+    headers:
+      User-Agent:
+      - Stripe/v1 RubyBindings/6.2.0
+      Authorization:
+      - Bearer sk_test_51Kz1xcIm6aRqt2RHGvuLqZEYSmSPEqMIWtVu6TxO51xtb057Sg0tUR0Su0yOFIcjEiXXr6GTYEDx2GYrHUNvf5F200Xjx20oPR
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"6.2.0","lang":"ruby","lang_version":"2.7.5 p203 (2021-11-24)","platform":"x86_64-darwin21","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Apples-MacBook-Pro.local 21.4.0 Darwin Kernel Version 21.4.0: Fri Mar 18 00:45:05
+        PDT 2022; root:xnu-8020.101.4~15/RELEASE_X86_64 x86_64","hostname":"Apples-MacBook-Pro.local"}'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Mon, 06 Jun 2022 10:10:03 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '669'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Idempotency-Key:
+      - a1f4c72e-680b-4e06-ace6-e97f6b34e394
+      Original-Request:
+      - req_m94CeNKMGcCUA1
+      Request-Id:
+      - req_m94CeNKMGcCUA1
+      Stripe-Should-Retry:
+      - 'false'
+      Stripe-Version:
+      - '2020-08-27'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "cus_LpHRYgxReYHx5I",
+          "object": "customer",
+          "address": null,
+          "balance": 0,
+          "created": 1654510203,
+          "currency": null,
+          "default_source": null,
+          "delinquent": false,
+          "description": "My First Test Customer (created for API docs at https://www.stripe.com/docs/api)",
+          "discount": null,
+          "email": null,
+          "invoice_prefix": "2014B14D",
+          "invoice_settings": {
+            "custom_fields": null,
+            "default_payment_method": null,
+            "footer": null
+          },
+          "livemode": false,
+          "metadata": {
+          },
+          "name": null,
+          "next_invoice_sequence": 1,
+          "phone": null,
+          "preferred_locales": [
+
+          ],
+          "shipping": null,
+          "tax_exempt": "none",
+          "test_clock": null
+        }
+  recorded_at: Mon, 06 Jun 2022 10:10:03 GMT
+recorded_with: VCR 6.1.0

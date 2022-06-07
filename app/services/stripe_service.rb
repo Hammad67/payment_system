@@ -31,7 +31,6 @@ class StripeService
   end
 
   def self.create_subscribtion(current_user, plan)
- 
     Stripe::Subscription.create({
                                   customer: current_user.stripe_cust_id.to_s,
                                   items: [
@@ -41,6 +40,7 @@ class StripeService
   end
 
   def self.create_source(customer, token)
+    binding.pry
     Stripe::Customer.create_source(
       customer.to_s,
       { source: token.to_s }

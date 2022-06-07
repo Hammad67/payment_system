@@ -9,7 +9,7 @@ describe SubscriptionPolicy do
     end
   end
   permissions :index? do
-    it 'denies access to Admin' do
+    it 'denies access to Admin' do 
       expect(subject).not_to permit(FactoryBot.create(:buyer))
     end
    end
