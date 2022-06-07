@@ -17,7 +17,7 @@ RSpec.describe FeaturesController, type: :controller do
     end
   end
 
-  describe 'GET index' do
+  describe '#index' do
     context 'Succefully render action with template' do
       it 'Index Action is running succefully with template' do
         get :index
@@ -36,6 +36,7 @@ RSpec.describe FeaturesController, type: :controller do
         expect(response.status).to eq(302)
       end
     end
+
     context 'Unsuccessfull case ' do
       it 'will render the new action again' do
         post :create,
@@ -47,7 +48,7 @@ RSpec.describe FeaturesController, type: :controller do
     end
   end
 
-  describe 'GET show' do
+  describe 'show' do
     context 'Succefully render action with template' do
       it 'Show action is executing successfully with template' do
         get :show, params: { id: feature.id }
@@ -55,6 +56,7 @@ RSpec.describe FeaturesController, type: :controller do
       end
     end
   end
+
   describe 'GET Edit' do
     it 'Update action is executing successfully with template' do
       get :edit, params: { id: feature.id }

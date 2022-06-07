@@ -1,5 +1,5 @@
-require 'vcr'
-require 'webmock'
+# require 'vcr'
+# require 'webmock'
 require 'rails_helper'
 require 'stripe_mock'
 # RSpec.describe SubscriptionsController, type: :controller do
@@ -18,17 +18,18 @@ require 'stripe_mock'
 #                                              })
 #           # expect(customer.email).to eq(user.email)
 #           user.update(stripe_cust_id: customer.id.to_s)
+#           binding.pry
 #         end
 #         binding.pry
-# VCR.use_cassette 'Stripe  Price Creation' do
-#   plans = Stripe::Price.create({
-#                                  unit_amount: (plan.monthly_fee * 100).to_s,
-#                                  currency: 'usd',
-#                                  recurring: { interval: 'month' },
-#                                  product_data: { name: plan.name.to_s }
-#                                })
-#   plan.update(stripe_plan_id: plans.id)
-# end
+#         VCR.use_cassette 'Stripe  Price Creation' do
+#           plans = Stripe::Price.create({
+#                                          unit_amount: (plan.monthly_fee * 100).to_s,
+#                                          currency: 'usd',
+#                                          recurring: { interval: 'month' },
+#                                          product_data: { name: plan.name.to_s }
+#                                        })
+#           plan.update(stripe_plan_id: plans.id)
+#         end
 #         binding.pry
 #         VCR.use_cassette 'Stripe tokken Creation' do
 #           stripe_tokken = Stripe::Token.create({
@@ -72,6 +73,7 @@ require 'stripe_mock'
 #   end
 # end
 
+#Code after stopping stripe ruby mock and Start with Caseetes
 require 'rails_helper'
 require 'stripe_mock'
 RSpec.describe SubscriptionsController, type: :controller do
@@ -82,6 +84,8 @@ RSpec.describe SubscriptionsController, type: :controller do
   after { StripeMock.stop }
   before do
     sign_in user
+    stripe_plan = stripe_helper.create_plan(id: 'my_plan', amount: 1500)
+    plan.update(stripe_plan_id: stripe_plan.id)
   end
 
   describe 'Post Create' do
@@ -92,23 +96,34 @@ RSpec.describe SubscriptionsController, type: :controller do
                                              card: stripe_helper.generate_card_token
                                            })
         expect(customer.email).to eq('johnny@appleseed.com')
-        binding.pry
+
         user.update(stripe_cust_id: customer.id.to_s)
 
         cust_card_source = Stripe::Customer.create({
                                                      source: customer.card.to_s
                                                    })
         user.update(stripe_source_id: customer.card.to_s)
+        #         StripeMock.stop
 
-        plans = stripe_helper.create_plan(id: 'my_plan', amount: 1500)
-        expect(plans.id).to eq('my_plan')
-        expect(plans.amount).to eq(1500)
+        #         VCR.use_cassette 'Stripe  Price Creation' do
+        #           plans = Stripe::Price.create({
+        #                                          unit_amount: (plan.monthly_fee * 100).to_s,
+        #                                          currency: 'usd',
+        #                                          recurring: { interval: 'month' },
+        #                                          product_data: { name: plan.name.to_s }
+        #                                        })
+        #           plan.update(stripe_plan_id: plans.id)
+        #         end
 
+        # VCR.use_cassette 'Stripe  Subscription Creation' do
         subscription = Stripe::Subscription.create({
                                                      customer: cust_card_source.id,
                                                      items: [{ plan: 'my_plan' }],
                                                      metadata: { foo: 'bar', example: 'yes' }
                                                    })
+        # end
+
+        StripeMock.start
         post :create,
              params: { subscription: { stripe_subscription_id: subscription.id.to_s, plan_id: plan.id.to_s, buyer_id: user.id.to_s, start_date: Time.zone.at(subscription.current_period_start),
                                        end_date: Time.zone.at(subscription.current_period_end) } }
@@ -122,12 +137,10 @@ RSpec.describe SubscriptionsController, type: :controller do
     end
   end
   context 'create Source Request' do
-    it 'creates a stripe customer with source plan and subscription' do
+    it 'creates a stripe customer with nill source plan and subscription' do
       customer = Stripe::Customer.create({ email: 'johnny@appleseed.com' })
       user.update(stripe_cust_id: customer.id.to_s, stripe_source_id: nil)
       # stripe_plan = stripe_helper.create_plan(id: plan.id, amount: plan.monthly_fee)
-      stripe_plan = stripe_helper.create_plan(id: 'my_plan', amount: 1500)
-      plan.update(stripe_plan_id: stripe_plan.id)
 
       post :create, params: { plan_id: plan.id, stripeToken: stripe_helper.generate_card_token }
       expect(response.status).to eq(302)
@@ -137,8 +150,7 @@ RSpec.describe SubscriptionsController, type: :controller do
     it 'Mocks stripe card Error' do
       customer = Stripe::Customer.create({ email: 'johnny@appleseed.com' })
       user.update(stripe_cust_id: customer.id.to_s, stripe_source_id: nil)
-      stripe_plan = stripe_helper.create_plan(id: 'my_plan', amount: 1500)
-      plan.update(stripe_plan_id: stripe_plan.id)
+
       tokken = Stripe::Token.create({
                                       card: {
                                         number: '4000000000009995',
@@ -172,10 +184,6 @@ RSpec.describe SubscriptionsController, type: :controller do
                                                      source: customer.card.to_s
                                                    })
         user.update(stripe_source_id: customer.card.to_s)
-
-        plans = stripe_helper.create_plan(id: 'my_plan', amount: 1500)
-        expect(plans.id).to eq('my_plan')
-        expect(plans.amount).to eq(1500)
 
         subscription = Stripe::Subscription.create({
                                                      customer: cust_card_source.id,
@@ -236,10 +244,6 @@ RSpec.describe SubscriptionsController, type: :controller do
                                                      source: customer.card.to_s
                                                    })
         user.update(stripe_source_id: customer.card.to_s)
-
-        plans = stripe_helper.create_plan(id: 'my_plan', amount: 1500)
-        expect(plans.id).to eq('my_plan')
-        expect(plans.amount).to eq(1500)
 
         subscription = Stripe::Subscription.create({
                                                      customer: cust_card_source.id,
