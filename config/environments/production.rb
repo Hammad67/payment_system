@@ -12,7 +12,9 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
   config.action_mailer.perform_deliveries = true
-  config.cache_classes = true
+  config.cache_store = :null_store
+  config.cache_classes = false
+
   config.eager_load = true
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
