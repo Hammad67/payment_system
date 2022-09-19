@@ -1,1 +1,3 @@
-web: rake db:migrate && rake db:seed && bin/rails server -b 0.0.0.0 -p {PORT:3000} 
+web: bin/rails server -p $PORT -e $RAILS_ENV
+web: bundle exec puma -C config/puma.rb
+release: rake db:migrate
