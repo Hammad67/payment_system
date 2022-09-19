@@ -1,5 +1,4 @@
-web: rake db:migrate && rake db:seed && bundle install && bin/rails server -b 0.0.0.0 -p {PORT:3000},
-
+FROM web: rake db:migrate && rake db:seed && bundle install && bin/rails server -b 0.0.0.0 -p {PORT:3000}
 FROM maven:3.6.1-jdk-11 AS build
 WORKDIR /
 # copy just the pom.xml for cache efficiency
