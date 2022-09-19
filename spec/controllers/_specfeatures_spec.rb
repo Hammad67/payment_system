@@ -42,7 +42,6 @@ RSpec.describe FeaturesController, type: :controller do
         post :create,
              params: { feature: { name: '', code: '', unit_price: '',
                                   max_unit_limit: '' } }
-
         expect(response.status).to eq(422)
       end
     end

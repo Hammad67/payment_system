@@ -3,8 +3,12 @@
 # Root of our applications where request hits
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
+  skip_before_action :verify_authenticity_token
   include Pundit
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  def authenticate_user!
+
+  end
 
   private
 

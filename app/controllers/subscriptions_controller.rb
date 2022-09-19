@@ -2,11 +2,12 @@
 
 # All subscription related requests
 class SubscriptionsController < ApplicationController
-  before_action :set_subscription, only: %i[show edit update]
+  before_action :set_subscription, only: %i[show  ]
   def new; end
 
   def index
-    @subscription = current_user.subscriptions.all.where(is_active: true)
+    @subscription = current_user.subscriptions.find_by(plan_id:params[:plan_id])
+    render json: { subscription: @subscription, user: current_user }
   end
 
   def create
@@ -20,10 +21,11 @@ class SubscriptionsController < ApplicationController
   def edit; end
 
   def update
+    @subscription=Subscription.find_by(plan_id:params[:id],buyer_id:current_user.id)
     @transaction = Transaction.find_by(subscription_id: @subscription.id.to_s)
     subscription_update = StripeService.update_subscription(@subscription)
     @subscription.update(is_active: false, end_date: Time.zone.at(subscription_update.canceled_at))
-    redirect_to buyers_path notice: 'Your Subscription is unsubscribed Successfully'
+
   end
 
   def show
@@ -51,7 +53,7 @@ class SubscriptionsController < ApplicationController
 
   def card_error(exeptions)
     flash[:error] = exeptions.message
-    redirect_to new_subscription_path
+
   end
 
   def create_subscribtion(plan_id)
@@ -60,7 +62,7 @@ class SubscriptionsController < ApplicationController
     @subscription = insert_subscription(subscription, plan)
     amount = @subscription.plan.monthly_fee
     create_transaction(amount, @subscription)
-    redirect_to @subscription
+
   end
 
   def insert_subscription(subscription, plan)

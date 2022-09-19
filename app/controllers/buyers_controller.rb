@@ -3,45 +3,53 @@
 # All buyer operations
 class BuyersController < ApplicationController
   before_action :set_buyer, only: %i[show edit update destroy]
+
   def index
-    @plan = Plan.all
+    # @plan = Plan.all
+    @buyer = Buyer.all
+    render json: @buyer
   end
 
   def new
     @buyer = Buyer.new
-    authorize @buyer
+    # authorize @buyer
   end
 
   def create
     @buyer = Buyer.new(user_params)
+    # @feature.admin_id = current_user.id
     if @buyer.save
-
-      redirect_to @buyer
+      render json: @buyer, status: :created
     else
-      render :new, status: :unprocessable_entity
+      render json: @buyer.errors.full_messages, status: :unprocessable_entity
     end
   end
 
   def edit; end
-
+  
   def update
     if @buyer.update(user_params)
-      authorize @buyer
+      # authorize @buyer
       stripe_cust_id = @buyer.stripe_cust_id
       StripeService.update_stripe_customer(stripe_cust_id, @buyer)
       InviteMailer.with(usermail: @buyer, password: @buyer.password).welcome_mail.deliver_now
-      redirect_to @buyer
+      render json: @buyer, status: :created
     else
-      render :edit, status: :unprocessable_entity
+      render json: @buyer.errors.full_messages, status: :unprocessable_entity
     end
   end
 
-  def show; end
+  def show
+    render json: @buyer
+  end
 
   def destroy
     StripeService.destroy_stripe_customer(@buyer)
-    @buyer.destroy
-    redirect_to root_path, notice: 'User was successfully destroyed.'
+    if @buyer.destroy
+      render json: { json: 'Buyer was successfully deleted.' }
+    else
+      render json: { json: @buyer.errors, status: :unprocessable_entity }
+    end
   end
 
   private

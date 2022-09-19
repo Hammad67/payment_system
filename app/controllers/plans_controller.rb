@@ -5,12 +5,20 @@ class PlansController < ApplicationController
   before_action :set_plan, only: %i[show edit update destroy]
   before_action :create_plan, only: %i[create]
 
+
   def index
+    @planfeature = []
     @plans = Plan.all
-    authorize @plans
+    @plans.each do |plan|
+      # authorize @plans
+      @planfeature.push(id: plan.id, name: plan.name, monthly_fee: plan.monthly_fee, plan_features: plan.features)
+    end
+    render json: { plan: @plans, planfeature: @planfeature }
   end
 
-  def show; end
+  def show
+    render json: @plan
+  end
 
   def new
     @plan = Plan.new
@@ -22,31 +30,26 @@ class PlansController < ApplicationController
   def create
     @plan = @feature.plans.create(plan_params)
     if @plan.save
-      authorize @plan
-      redirect_to plan_path(@plan)
+      render json: @plan, status: :created
     else
-      render :new, status: :unprocessable_entity
+      render json: @plan.errors, status: :unprocessable_entity
     end
   end
 
   def update
-    respond_to do |format|
-      if @plan.update(plan_params)
-        @plan.admin_id = current_user.id
-        format.html { redirect_to plan_url(@plan), notice: 'Plan was successfully updated.' }
-        format.json { render :show, status: :ok, location: @plan }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @plan.errors, status: :unprocessable_entity }
-      end
+    if @plan.update(plan_params)
+      render json: @plan, status: :created
+    else
+      render json: @plan.errors, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @plan.destroy
-    respond_to do |format|
-      format.html { redirect_to plans_url, notice: 'Plan was successfully destroyed.' }
-      format.json { head :no_content }
+   
+    if @plan.destroy
+      render json: { json: 'plan was successfully deleted.' }
+    else
+      render json: { json: @plan.errors, status: :unprocessable_entity }
     end
   end
 
@@ -58,7 +61,7 @@ class PlansController < ApplicationController
 
   def set_plan
     @plan = Plan.find(params[:id])
-    authorize @plan
+    # authorize @plan
   end
 
   def plan_params

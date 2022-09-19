@@ -2,10 +2,11 @@
 
 # plan model
 class Plan < ApplicationRecord
-  has_many :features_plans, dependent: :destroy
+  has_many :features_plans
   has_many :features, through: :features_plans
   validates :name, presence: true
-  validates :name, length: { minimum: 10, maximum: 20 }
+  validates :name, length: { minimum: 10, maximum: 20,
+                             message: 'Invalid length minimum 10 maximum 20 characters allowed' }
   validates :monthly_fee, presence: true
   has_many :subscriptions, dependent: :destroy
   has_many :buyers, through: :subscriptions

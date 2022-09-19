@@ -6,7 +6,6 @@ RSpec.describe SubscriptionsController, type: :controller do
   let!(:user) { FactoryBot.create(:buyer) }
   let!(:plan) { FactoryBot.create(:plan) }
   before do
-    binding.pry
     sign_in user
   end
 

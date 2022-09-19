@@ -10,7 +10,16 @@ Rails.application.routes.draw do
   resources :buyers
   resources :admins, only: %i[index]
   resources :subscriptions, only: %i[new create show update index]
-  devise_for :users, skip: %i[registrations]
+
+  # namespace :api do
+  #   namespace :v1 do
+  devise_for :users,
+             controllers: {
+               sessions: 'api/v1/sessions',
+               registrations: 'api/v1/registrations'
+             }
+  #   end
+  # end
   resources :webhooks, only: %i[create]
 
   root to: 'homes#index'

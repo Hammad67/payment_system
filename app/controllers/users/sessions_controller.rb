@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Users
-  class SessionsController < Devise::SessionsController
+  class SessionsController < Devise::SessionsController <  ApplicationController
     # before_action :configure_sign_in_params, only: [:create]
 
     # GET /resource/sign_in
