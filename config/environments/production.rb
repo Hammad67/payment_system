@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   config.action_mailer.default_url_options = { host: (ENV['APP_URL']).to_s, port: 3000 }
