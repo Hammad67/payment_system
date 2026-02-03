@@ -13,11 +13,17 @@ class PlansController < ApplicationController
       # authorize @plans
       @planfeature.push(id: plan.id, name: plan.name, monthly_fee: plan.monthly_fee, plan_features: plan.features)
     end
-    render json: { plan: @plans, planfeature: @planfeature }
+    respond_to do |format|
+      format.html # renders index.html.erb
+      format.json { render json: { plan: @plans, planfeature: @planfeature } }
+    end
   end
 
   def show
-    render json: @plan
+    respond_to do |format|
+      format.html # renders show.html.erb
+      format.json { render json: @plan }
+    end
   end
 
   def new
@@ -29,27 +35,38 @@ class PlansController < ApplicationController
 
   def create
     @plan = @feature.plans.create(plan_params)
-    if @plan.save
-      render json: @plan, status: :created
-    else
-      render json: @plan.errors, status: :unprocessable_entity
+    respond_to do |format|
+      if @plan.save
+        format.html { redirect_to @plan, notice: 'Plan was successfully created.' }
+        format.json { render json: @plan, status: :created }
+      else
+        format.html { render :new }
+        format.json { render json: @plan.errors, status: :unprocessable_entity }
+      end
     end
   end
 
   def update
-    if @plan.update(plan_params)
-      render json: @plan, status: :created
-    else
-      render json: @plan.errors, status: :unprocessable_entity
+    respond_to do |format|
+      if @plan.update(plan_params)
+        format.html { redirect_to @plan, notice: 'Plan was successfully updated.' }
+        format.json { render json: @plan, status: :created }
+      else
+        format.html { render :edit }
+        format.json { render json: @plan.errors, status: :unprocessable_entity }
+      end
     end
   end
 
   def destroy
-   
-    if @plan.destroy
-      render json: { json: 'plan was successfully deleted.' }
-    else
-      render json: { json: @plan.errors, status: :unprocessable_entity }
+    respond_to do |format|
+      if @plan.destroy
+        format.html { redirect_to plans_url, notice: 'Plan was successfully deleted.' }
+        format.json { render json: { json: 'plan was successfully deleted.' } }
+      else
+        format.html { redirect_to plans_url, alert: 'Failed to delete plan.' }
+        format.json { render json: { json: @plan.errors, status: :unprocessable_entity } }
+      end
     end
   end
 

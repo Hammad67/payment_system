@@ -22,7 +22,7 @@ gem 'devise'
 gem 'figaro'
 gem 'jbuilder', '~> 2.7'
 gem 'ngrok-tunnel'
-gem 'pg'
+gem 'pg', '~> 1.3.5'
 gem 'rack-cors'
 gem 'pry'
 gem 'devise-jwt'
@@ -32,6 +32,7 @@ gem 'select2-rails'
 gem 'simple_form'
 gem 'stripe'
 gem 'stripe_event'
+gem 'ffi', '~> 1.15.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
@@ -42,7 +43,7 @@ gem 'stripe_event'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
-gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
+gem 'faker', '~> 2.23'
 
 group :development, :test do
   gem 'factory_bot_rails', '~> 6.2'

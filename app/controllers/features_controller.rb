@@ -7,7 +7,10 @@ class FeaturesController < ApplicationController
   def index
     @feature = Feature.all
     # authorize @feature
-    render json: @feature
+    respond_to do |format|
+      format.html # renders index.html.erb
+      format.json { render json: @feature }
+    end
   end
 
   def new
@@ -18,10 +21,14 @@ class FeaturesController < ApplicationController
   def create
     @feature = Feature.new(feature_params)
     # @feature.admin_id = current_user.id
-    if @feature.save
-      render json: @feature, status: :created
-    else
-      render json: @feature.errors.full_messages, status: :unprocessable_entity
+    respond_to do |format|
+      if @feature.save
+        format.html { redirect_to @feature, notice: 'Feature was successfully created.' }
+        format.json { render json: @feature, status: :created }
+      else
+        format.html { render :new }
+        format.json { render json: @feature.errors.full_messages, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -29,10 +36,14 @@ class FeaturesController < ApplicationController
 
   def update
     # authorize @feature
-    if @feature.update(feature_params)
-      render json: @feature, status: :created
-    else
-      render json: @featrue.errors.full_messages, status: :unprocessable_entity
+    respond_to do |format|
+      if @feature.update(feature_params)
+        format.html { redirect_to @feature, notice: 'Feature was successfully updated.' }
+        format.json { render json: @feature, status: :created }
+      else
+        format.html { render :edit }
+        format.json { render json: @featrue.errors.full_messages, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -46,7 +57,10 @@ class FeaturesController < ApplicationController
   end
 
   def show
-    render json: @feature
+    respond_to do |format|
+      format.html # renders show.html.erb
+      format.json { render json: @feature }
+    end
   end
 
   private

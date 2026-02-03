@@ -7,7 +7,10 @@ class BuyersController < ApplicationController
   def index
     # @plan = Plan.all
     @buyer = Buyer.all
-    render json: @buyer
+    respond_to do |format|
+      format.html # renders index.html.erb
+      format.json { render json: @buyer }
+    end
   end
 
   def new
@@ -18,29 +21,40 @@ class BuyersController < ApplicationController
   def create
     @buyer = Buyer.new(user_params)
     # @feature.admin_id = current_user.id
-    if @buyer.save
-      render json: @buyer, status: :created
-    else
-      render json: @buyer.errors.full_messages, status: :unprocessable_entity
+    respond_to do |format|
+      if @buyer.save
+        format.html { redirect_to @buyer, notice: 'Buyer was successfully created.' }
+        format.json { render json: @buyer, status: :created }
+      else
+        format.html { render :new }
+        format.json { render json: @buyer.errors.full_messages, status: :unprocessable_entity }
+      end
     end
   end
 
   def edit; end
   
   def update
-    if @buyer.update(user_params)
-      # authorize @buyer
-      stripe_cust_id = @buyer.stripe_cust_id
-      StripeService.update_stripe_customer(stripe_cust_id, @buyer)
-      InviteMailer.with(usermail: @buyer, password: @buyer.password).welcome_mail.deliver_now
-      render json: @buyer, status: :created
-    else
-      render json: @buyer.errors.full_messages, status: :unprocessable_entity
+    respond_to do |format|
+      if @buyer.update(user_params)
+        # authorize @buyer
+        stripe_cust_id = @buyer.stripe_cust_id
+        StripeService.update_stripe_customer(stripe_cust_id, @buyer)
+        InviteMailer.with(usermail: @buyer, password: @buyer.password).welcome_mail.deliver_now
+        format.html { redirect_to @buyer, notice: 'Buyer was successfully updated.' }
+        format.json { render json: @buyer, status: :created }
+      else
+        format.html { render :edit }
+        format.json { render json: @buyer.errors.full_messages, status: :unprocessable_entity }
+      end
     end
   end
 
   def show
-    render json: @buyer
+    respond_to do |format|
+      format.html # renders show.html.erb
+      format.json { render json: @buyer }
+    end
   end
 
   def destroy

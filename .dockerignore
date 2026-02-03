@@ -14,3 +14,15 @@ config/master.key
 config/credentials/*.key
 
 node_modules
+
+# Environment files (secrets should not be in image)
+.env
+.env.local
+.env.*.local
+
+# Test and coverage
+coverage
+spec/cassettes
+
+# Build artifacts
+dump.rdb
