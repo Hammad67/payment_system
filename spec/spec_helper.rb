@@ -1,3 +1,4 @@
+require 'logger'
 require 'simplecov'
 require 'pundit/matchers'
 require 'pundit/rspec'
