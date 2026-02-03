@@ -1,0 +1,55 @@
+name: Rails CI (Docker-based)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: payment_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=5
+
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: postgres://postgres:password@localhost:5432/payment_test
+      SECRET_KEY_BASE: test-secret-key
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Rails Docker image
+        run: docker build -t payment_app .
+
+      - name: Run RSpec inside container
+        run: |
+          docker run --rm \
+            --env RAILS_ENV=test \
+            --env DATABASE_URL=$DATABASE_URL \
+            --env SECRET_KEY_BASE=$SECRET_KEY_BASE \
+            --network host \
+            payment_app \
+            bash -c "bundle exec rails db:prepare && bundle exec rspec"
+      - name: Run RuboCop
+        run: |
+          docker run --rm payment_app bundle exec rubocop
+
+      - name: Run Brakeman
+        run: |
+          docker run --rm payment_app bundle exec brakeman
