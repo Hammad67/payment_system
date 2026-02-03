@@ -37,3 +37,13 @@ yarn-debug.log*
 
 # Ignore application configuration
 /config/application.yml
+
+# OS / editor
+.DS_Store
+**/.DS_Store
+
+# Bundler vendor
+/vendor/bundle/
+
+# Dotenv
+.env
